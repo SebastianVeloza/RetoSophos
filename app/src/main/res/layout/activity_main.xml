@@ -4,50 +4,90 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity"
+    android:background="@color/white">
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
     <TextView
         android:id="@+id/txt1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="148dp"
         android:text="Ingresa tus datos para acceder."
-        tools:layout_editor_absoluteX="147dp"
-        tools:layout_editor_absoluteY="195dp" />
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.471"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/txtEmail"
-        android:layout_width="wrap_content"
+        android:id="@+id/txt_Email"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="164dp"
         android:ems="10"
-        android:text="Correo electronico"
+        android:hint="@string/txt_Email"
         android:inputType="textEmailAddress"
-        tools:layout_editor_absoluteX="83dp"
-        tools:layout_editor_absoluteY="234dp" />
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/txt_Password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/txtPassword"
-        android:layout_width="wrap_content"
+        android:id="@+id/txt_Password"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Contraseña"
+        android:layout_marginTop="248dp"
         android:ems="10"
-        android:inputType="text"
-        tools:layout_editor_absoluteX="78dp"
-        tools:layout_editor_absoluteY="312dp" />
+        android:hint="@string/txt_Password"
+        android:inputType="textPassword"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_Ingresar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <Button
-        android:id="@+id/btnIngresar"
-        android:layout_width="wrap_content"
+        android:id="@+id/btn_Ingresar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ingresar"
-        tools:layout_editor_absoluteX="129dp"
-        tools:layout_editor_absoluteY="386dp" />
+        android:layout_marginBottom="44dp"
+        android:text="@string/btn_Ingresar"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_huella"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/redondear"
+        />
 
     <Button
-        android:id="@+id/btnhuella"
-        android:layout_width="wrap_content"
+        android:id="@+id/btn_huella"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ingresar con huella"
-        tools:layout_editor_absoluteX="131dp"
-        tools:layout_editor_absoluteY="466dp" />
+        android:layout_marginBottom="140dp"
+        android:text="@string/btn_huella"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/redondearsinfondo"/>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

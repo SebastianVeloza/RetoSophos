@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">retoSohphos</string>
-    <string name="app_name">retoSohphos</string>
-    <string name="app_name">retoSohphos</string>
-    <string name="app_name">retoSohphos</string>
+    <string name="txt_Password">Contraseña</string>
+    <string name="txt_Email">Correo electrónico</string>
+    <string name="btn_Ingresar">Ingresar</string>
+    <string name="btn_huella">Ingresar con huella</string>
+
+    <string name="btn_Salir">Salir</string>
+
+
 </resources>

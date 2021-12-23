@@ -9,6 +9,6 @@ object userNetwork {
             .baseUrl("https://6w33tkx4f9.execute-api.us-east-1.amazonaws.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(userApi::class.java)
+            .create(apiInterface::class.java)
 }
 }

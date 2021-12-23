@@ -1,4 +1,4 @@
-package com.example.retosohphos.Api
+package com.example.retosohphos.models
 
 import com.google.gson.annotations.SerializedName
 /*"id": "29",
