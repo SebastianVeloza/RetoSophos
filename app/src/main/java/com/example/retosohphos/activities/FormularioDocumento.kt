@@ -1,12 +1,14 @@
 package com.example.retosohphos.activities
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.AdapterView
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
+import androidx.core.app.ActivityCompat
 import com.example.retosohphos.R
 
 class FormularioDocumento : AppCompatActivity() {
@@ -82,5 +84,41 @@ class FormularioDocumento : AppCompatActivity() {
 
         }
 
+        val btn_camara=findViewById<ImageView>(R.id.btn_camara)
+        btn_camara.setOnClickListener{
+            solicitudPermiso()
+           // val camara= Intent(this,VerDocumentos::class.java)
+            //startActivity(camara)
+        }
+
+    }
+
+    private fun permisoCamara()=ActivityCompat.checkSelfPermission(this,Manifest.permission.CAMERA)==PackageManager.PERMISSION_GRANTED
+
+    private fun solicitudPermiso(){
+        var permisoSolicitud= mutableListOf<String>()
+        if (!permisoCamara()){
+            permisoSolicitud.add(Manifest.permission.CAMERA)
+        }
+
+
+        if (permisoSolicitud.isNotEmpty()){
+            ActivityCompat.requestPermissions(this,permisoSolicitud.toTypedArray(),1)
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode==1 && grantResults.isNotEmpty()){
+            for (i in grantResults.indices){
+                if (grantResults[i] == PackageManager.PERMISSION_GRANTED){
+                    Log.d("Permisos","${permissions[i]} aceptados.")
+                }
+            }
+        }
     }
 }
