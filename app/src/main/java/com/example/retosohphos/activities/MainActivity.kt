@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.widget.Button
 import com.example.retosohphos.R
 import com.example.retosohphos.databinding.ActivityMainBinding
+import com.example.retosohphos.providers.ApiProvider
 
 
 //private val base_URL = "https://6w33tkx4f9.execute-api.us-east-1.amazonaws.com/"
 
 class MainActivity : AppCompatActivity() {
+    private val apiprovider: ApiProvider? =null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -21,4 +23,8 @@ class MainActivity : AppCompatActivity() {
             startActivity(Menu)
         }
     }
+    fun login(){
+        apiprovider
+    }
+
 }

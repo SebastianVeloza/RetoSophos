@@ -5,7 +5,41 @@
     <string name="btn_Ingresar">Ingresar</string>
     <string name="btn_huella">Ingresar con huella</string>
 
+    <string name="txt_Nombre">Nombre</string>
     <string name="btn_Salir">Salir</string>
+    <string name="txt_enviar">Enviar Documentos</string>
+    <string name="btn_enviar">Ingresar</string>
+    <string name="txt_ver">Ver Documentos</string>
+    <string name="btn_ver">Ingresar</string>
+    <string name="txt_oficinas">Oficinas</string>
+    <string name="btn_oficinas">Ingresar</string>
+
+    <string name="txt_Titulo">Envío de Documentación</string>
+    <string name="etxt_Numerodoc">Numero de Documento</string>
+    <string name="etxt_Nombre">Nombres</string>
+    <string name="etxt_Apellido">Apellidos</string>
+    <string name="etxt_Email">Email</string>
+    <string-array name="spn_Tipodedoc1">
+        <item>Cedula </item>
+        <item>Tarjeta de identidad </item>
+    </string-array>
+
+    <string-array name="spn_Ciudad1">
+
+    <item>Bucaramaga </item>
+    <item>Cali</item>
+    <item>Medellin </item>
+    <item>Barranquilla </item>
+    <item>Bogota </item>
+    <item>Cartagena </item>
+    </string-array>
+    <string-array name="spn_TipoDeAdjunto1">
+        <item>PDF </item>
+        <item>CSV </item>
+        <item>DOC </item>
+    </string-array>
+    <string name="btn_enviarDoc">Enviar</string>
+    <string name="btn_Adjunto">Documento</string>
 
 
 </resources>

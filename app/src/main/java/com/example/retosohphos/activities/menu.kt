@@ -16,5 +16,16 @@ class menu : AppCompatActivity() {
             val Menu= Intent(this,MainActivity::class.java)
             startActivity(Menu)
     }
+        val btn_enviar=findViewById<Button>(R.id.btn_enviar)
+        btn_enviar.setOnClickListener{
+            val enviar= Intent(this,FormularioDocumento::class.java)
+            startActivity(enviar)
+        }
+
+        val btn_ver=findViewById<Button>(R.id.btn_ver)
+        btn_ver.setOnClickListener{
+            val ver= Intent(this,VerDocumentos::class.java)
+            startActivity(ver)
+        }
         }
 }

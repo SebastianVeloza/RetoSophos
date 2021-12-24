@@ -7,7 +7,6 @@
          location permissions for the "MyLocation" functionality.
          <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     -->
-
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -18,9 +17,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
+            android:name=".activities.Oficinas"
+            android:exported="false" />
+        <activity
+            android:name=".activities.VerDocumentos"
+            android:exported="false" />
+        <activity
+            android:name=".activities.FormularioDocumento"
+            android:exported="false" />
+        <activity
             android:name=".activities.menu"
             android:exported="false" />
-
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -32,8 +39,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
-
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
         <activity
             android:name=".activities.MainActivity"
