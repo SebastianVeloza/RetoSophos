@@ -127,7 +127,7 @@ class FormularioDocumento : AppCompatActivity() {
         val camaraIntent=Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         camaraIntent.putExtra(MediaStore.EXTRA_OUTPUT,foto)
         startActivityForResult(camaraIntent,REQUEST_CAMERA)
-        //print("FOTTOOOOO "+camaraIntent)
+        Log.d("foto guardad"," ${foto} O ${camaraIntent} .")
     }
 
 
