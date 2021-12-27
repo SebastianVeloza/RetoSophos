@@ -1,9 +1,11 @@
 package com.example.retosohphos.models
 
+import com.google.gson.annotations.SerializedName
+
 data class OficinasResponse(
-    val Ciudad: String,
-    val IdOficina: Int,
-    val Latitud: String,
-    val Longitud: String,
-    val Nombre: String
+    @SerializedName("Ciudad") val Ciudad: String,
+    @SerializedName("IdOficina") val IdOficina: Int,
+    @SerializedName("Latitud") val Latitud: String,
+    @SerializedName("Longitud") val Longitud: String,
+    @SerializedName("Nombre") val Nombre: String
 )

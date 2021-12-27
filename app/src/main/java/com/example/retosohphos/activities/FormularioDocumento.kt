@@ -23,6 +23,11 @@ class FormularioDocumento : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_formulario_documento)
 
+        val objetoIntent:Intent=intent
+        var correo=objetoIntent.getStringExtra("Correo")
+        val txt_email=findViewById<TextView>(R.id.etxt_Email)
+        txt_email.text=correo
+
         val TipoDoc= findViewById<Spinner>(R.id.spn_Tipodedoc)
         val Ciudad= findViewById<Spinner>(R.id.spn_Ciudad)
         val TipoAdjunto= findViewById<Spinner>(R.id.spn_TipoDeAdjunto)

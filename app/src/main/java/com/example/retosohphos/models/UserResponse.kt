@@ -1,9 +1,11 @@
 package com.example.retosohphos.models
 
+import com.google.gson.annotations.SerializedName
+
 data class UserResponse(
-    val acceso: Boolean,
-    val admin: Boolean,
-    val apellido: String,
-    val id: String,
-    val nombre: String
+    @SerializedName("acceso") val acceso: Boolean,
+    @SerializedName("admin") val admin: Boolean,
+    @SerializedName("apellido") val apellido: String,
+    @SerializedName("id") val id: String,
+    @SerializedName("nombre") val nombre: String
 )

@@ -7,13 +7,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import com.example.retosohphos.R
+
 
 class menu : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
+
+        val objetoIntent:Intent=intent
+        var Nombre=objetoIntent.getStringExtra("Nombre")
+        val txt_Nombre=findViewById<TextView>(R.id.txt_Nombre)
+        txt_Nombre.text=Nombre
 
         val btn_Salir=findViewById<Button>(R.id.btn_salir)
         btn_Salir.setOnClickListener{
@@ -22,7 +29,10 @@ class menu : AppCompatActivity() {
     }
         val btn_enviar=findViewById<Button>(R.id.btn_enviar)
         btn_enviar.setOnClickListener{
+            var email=objetoIntent.getStringExtra("Correo")
+
             val enviar= Intent(this,FormularioDocumento::class.java)
+            enviar.putExtra("Correo",email)
             startActivity(enviar)
         }
 

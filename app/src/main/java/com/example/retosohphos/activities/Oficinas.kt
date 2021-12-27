@@ -29,6 +29,7 @@ class Oficinas : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocation
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_oficinas)
         crearMapa()
+        marcadores()
     }
 
     private fun crearMapa() {
@@ -53,9 +54,17 @@ class Oficinas : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocation
 
         CoroutineScope(Dispatchers.IO).launch {
             val call= RetrofitApi.api.getOficinas()
+            val lat=call.body()
+            Log.d("oficinas","${lat}.")
             runOnUiThread{
                 if (call.isSuccessful){
-                    //obtenemos la lista
+                    lat?.let {
+                        for (lista in it ){
+                            Log.d("oficinas2","${lista.Latitud} y ${lista.Longitud}.")
+
+                        }
+                    }
+
 
 
 

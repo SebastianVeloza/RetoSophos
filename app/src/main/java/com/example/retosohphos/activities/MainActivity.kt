@@ -21,6 +21,10 @@ import java.util.jar.Manifest
 //private val base_URL = "https://6w33tkx4f9.execute-api.us-east-1.amazonaws.com/"
 
 class MainActivity : AppCompatActivity() {
+    var nombre: String? =null
+        get() = field
+    var email: String? =null
+        get() = field
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,10 +34,10 @@ class MainActivity : AppCompatActivity() {
         btn_Ingresar.setOnClickListener{
             val et_email=findViewById<EditText>(R.id.txt_Email)
             val et_clave=findViewById<EditText>(R.id.txt_Password)
-            val id=et_email.text.toString()
+            email=et_email.text.toString()
             val clave=et_clave.text.toString()
-            Log.d("Datos ingresados","Correo ${id} y Contraseña ${clave} .")
-        login(id, clave)
+            Log.d("Datos ingresados","Correo ${email} y Contraseña ${clave} .")
+        login(email!!, clave)
         }
 
 
@@ -45,6 +49,9 @@ class MainActivity : AppCompatActivity() {
         btn_Ingresar.setOnClickListener{
 
             val Menu=Intent(this,menu::class.java)
+            Menu.putExtra("Nombre",nombre)
+            Menu.putExtra("Correo",email)
+
             startActivity(Menu)
         }
     }
@@ -53,11 +60,12 @@ class MainActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
             val call=RetrofitApi.api.getUsuario(id, clave)
-            val user= call.body()?.nombre
-            Log.d("usuario","${user}.")
+            nombre= call.body()?.nombre
+            Log.d("usuario","${nombre}.")
             runOnUiThread{
                 if (call.isSuccessful){
                     pasar()
+
 
 
 
