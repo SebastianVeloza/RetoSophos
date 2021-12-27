@@ -24,7 +24,8 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="48dp" />
+        tools:layout_editor_absoluteY="48dp"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/btn_camara"
@@ -94,7 +95,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etxt_Nombre" />
 
-        <TextView
+        <EditText
             android:id="@+id/etxt_Email"
             android:layout_width="275dp"
             android:layout_height="wrap_content"
@@ -135,7 +136,7 @@
             android:layout_marginBottom="24dp"
             android:background="@color/purple_500"
             android:text="@string/btn_Adjunto"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             app:layout_constraintBottom_toTopOf="@+id/btn_enviarDoc"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spn_TipoDeAdjunto"
@@ -152,6 +153,14 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/btn_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+
+            app:srcCompat="@drawable/cam" />
     </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

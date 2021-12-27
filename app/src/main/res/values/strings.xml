@@ -20,26 +20,29 @@
     <string name="etxt_Apellido">Apellidos</string>
     <string name="etxt_Email">Email</string>
     <string-array name="spn_Tipodedoc1">
-        <item>Cedula </item>
-        <item>Tarjeta de identidad </item>
+        <item>CC</item>
+        <item>TI</item>
+        <item>CE</item>
+        <item>PA</item>
     </string-array>
 
     <string-array name="spn_Ciudad1">
 
-    <item>Bucaramaga </item>
-    <item>Cali</item>
-    <item>Medellin </item>
-    <item>Barranquilla </item>
-    <item>Bogota </item>
-    <item>Cartagena </item>
+    <item>Chile</item>
+    <item>Estados Unidos</item>
+    <item>Bogotá</item>
+    <item>Medellín</item>
+    <item>Panamá</item>
+    <item>México</item>
     </string-array>
     <string-array name="spn_TipoDeAdjunto1">
-        <item>PDF </item>
-        <item>CSV </item>
-        <item>DOC </item>
+        <item>Certificado de cuenta</item>
+        <item>Cédula</item>
+        <item>Factura</item>
+        <item>Incapacidad</item>
     </string-array>
     <string name="btn_enviarDoc">Enviar</string>
-    <string name="btn_Adjunto">Documento</string>
+    <string name="btn_Adjunto">Adjuntar</string>
 
 
 </resources>

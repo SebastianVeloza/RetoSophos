@@ -1,6 +1,7 @@
 package com.example.retosohphos.activities
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,6 +19,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class Oficinas : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener {
 
@@ -41,51 +43,71 @@ class Oficinas : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocation
     override fun onMapReady(googlemap: GoogleMap) {
 
         map=googlemap
-        crearMarcador()
+
         map.setOnMyLocationButtonClickListener(this)
         map.uiSettings.isZoomControlsEnabled=true
         map.uiSettings.isCompassEnabled=true
         enableLocalizacion()
+        marcadores()
 
     }
 
-    fun marcadores(){
+    fun marcadores() {
 
 
         CoroutineScope(Dispatchers.IO).launch {
-            val call= RetrofitApi.api.getOficinas()
-            val lat=call.body()
-            Log.d("oficinas","${lat}.")
-            runOnUiThread{
-                if (call.isSuccessful){
-                    lat?.let {
-                        for (lista in it ){
-                            Log.d("oficinas2","${lista.Latitud} y ${lista.Longitud}.")
+            //val call = RetrofitApi.api.getOficinas()
+            //if (call.isSuccessful) {
 
-                        }
+            //val body = call.body()?.item
+            //Log.d("body", "${body} .")
+
+
+
+
+                    try {
+                      val call= RetrofitApi.api.getOficinas()
+                        //runOnUiThread {
+                            for (it in call.item ){
+                                runOnUiThread {
+                                val long=it.Longitud
+                                val lat=it.Latitud
+                                crearMarcador(lat.toDouble(), long.toDouble() )
+                                Log.d("lon", "longitud ${long} .")
+                                    }
+                            }
+
+
+                    }catch (Error:Exception){
+                        Log.d("Error", "Error $Error .")
                     }
 
 
+                //}
+           // }
 
 
-                }
-            }
 
 
         }
-
+    }
+    override fun onMyLocationButtonClick(): Boolean {
+        return false
     }
 
-    private fun crearMarcador() {
-        val coordenadas=LatLng(1.2345678,-1.3243)
-        val marker=MarkerOptions().position(coordenadas).title("Oficinas de Shopos solution")
+
+
+    private fun crearMarcador(Lat:Double,long:Double) {
+        val coordenadas=LatLng(Lat,long)
+        val marker=MarkerOptions().position(coordenadas).title("Oficina de Shopos solution")
         map.addMarker(marker)
         map.animateCamera(
-            CameraUpdateFactory.newLatLngZoom(coordenadas,15f),4000,null
+            CameraUpdateFactory.newLatLngZoom(coordenadas,7f),4000,null
         )
     }
     private fun validarPermisos()=ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED
 
+    @SuppressLint("MissingPermission")
     private fun enableLocalizacion(){
         if (!::map.isInitialized)return
         if (validarPermisos()){
@@ -131,7 +153,5 @@ class Oficinas : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocation
         }
     }
 
-    override fun onMyLocationButtonClick(): Boolean {
-        return false
-    }
+
 }

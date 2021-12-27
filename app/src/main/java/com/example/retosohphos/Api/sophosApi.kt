@@ -1,6 +1,6 @@
 package com.example.retosohphos.Api
 
-import com.example.retosohphos.models.OficinasResponse
+import com.example.retosohphos.models.ListaOficina
 import com.example.retosohphos.models.UserResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -15,5 +15,5 @@ interface sophosApi {
     ):Response<UserResponse>
 
     @GET("RS_Oficinas")
-    suspend fun getOficinas():Response<List<OficinasResponse>>
+    suspend fun getOficinas():ListaOficina
 }
