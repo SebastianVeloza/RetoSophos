@@ -2,6 +2,7 @@ package com.example.retosohphos.activities
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -24,7 +25,8 @@ import java.lang.Exception
 class Oficinas : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener {
 
     private lateinit var map: GoogleMap
-    //private val response:list<OficinasResponse>
+    var ciudad: String? =null
+        get() = field
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,6 +74,7 @@ class Oficinas : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocation
                                 runOnUiThread {
                                 val long=it.Longitud
                                 val lat=it.Latitud
+                                    ciudad=it.Ciudad
                                 crearMarcador(lat.toDouble(), long.toDouble() )
                                 Log.d("lon", "longitud ${long} .")
                                     }
@@ -92,6 +95,8 @@ class Oficinas : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocation
         }
     }
     override fun onMyLocationButtonClick(): Boolean {
+        val Menu= Intent(this,menu::class.java)
+        Menu.putExtra("Ciudad",ciudad)
         return false
     }
 
@@ -102,7 +107,7 @@ class Oficinas : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocation
         val marker=MarkerOptions().position(coordenadas).title("Oficina de Shopos solution")
         map.addMarker(marker)
         map.animateCamera(
-            CameraUpdateFactory.newLatLngZoom(coordenadas,7f),4000,null
+            CameraUpdateFactory.newLatLngZoom(coordenadas,4f),4000,null
         )
     }
     private fun validarPermisos()=ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED
@@ -125,6 +130,7 @@ class Oficinas : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocation
         }
     }
 
+    @SuppressLint("MissingPermission")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -144,6 +150,7 @@ class Oficinas : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocation
         }
     }
 
+    @SuppressLint("MissingPermission")
     override fun onResumeFragments() {
         super.onResumeFragments()
         if (!::map.isInitialized)return

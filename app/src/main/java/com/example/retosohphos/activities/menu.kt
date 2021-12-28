@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
@@ -19,8 +20,11 @@ class menu : AppCompatActivity() {
 
         val objetoIntent:Intent=intent
         var Nombre=objetoIntent.getStringExtra("Nombre")
+        var Apellido=objetoIntent.getStringExtra("Apellido")
+        var Ciudad=objetoIntent.getStringExtra("Ciudad")
         val txt_Nombre=findViewById<TextView>(R.id.txt_Nombre)
-        txt_Nombre.text=Nombre
+        txt_Nombre.text="Hola "+Nombre
+
 
         val btn_Salir=findViewById<Button>(R.id.btn_salir)
         btn_Salir.setOnClickListener{
@@ -33,6 +37,9 @@ class menu : AppCompatActivity() {
 
             val enviar= Intent(this,FormularioDocumento::class.java)
             enviar.putExtra("Correo",email)
+            enviar.putExtra("Nombre",Nombre)
+            enviar.putExtra("Apellido",Apellido)
+            enviar.putExtra("Ciudad",Ciudad)
             startActivity(enviar)
         }
 
@@ -49,6 +56,14 @@ class menu : AppCompatActivity() {
             startActivity(oficina)
         }
         }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu,menu)
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
     private fun permisoLocacion()=
         ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)== PackageManager.PERMISSION_GRANTED
 

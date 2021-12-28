@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "retoSohphos"
 include ':app'
+include ':biometric-auth'

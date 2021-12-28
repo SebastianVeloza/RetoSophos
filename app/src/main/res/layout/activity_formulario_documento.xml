@@ -5,11 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.FormularioDocumento">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
 
     <ImageView
         android:id="@+id/btn_atras"
         android:layout_width="55dp"
         android:layout_height="35dp"
+        android:layout_gravity="start"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/atras" />
@@ -20,6 +30,7 @@
         android:layout_height="wrap_content"
         android:text="@string/txt_Titulo"
         android:layout_marginTop="20dp"
+        android:layout_gravity="center"
         android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,11 +38,13 @@
         tools:layout_editor_absoluteY="48dp"
         tools:ignore="MissingConstraints" />
 
+
     <ImageView
         android:id="@+id/btn_camara"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_gravity="center"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -40,127 +53,127 @@
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/cam" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent">
 
-        <Spinner
-            android:id="@+id/spn_Tipodedoc"
-            android:layout_width="363dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:paddingRight="50dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="167dp" />
 
-        <EditText
-            android:id="@+id/etxt_Numerodoc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="20dp"
-            android:ems="10"
-            android:hint="@string/etxt_Numerodoc"
-            android:inputType="number"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spn_Tipodedoc" />
 
-        <EditText
-            android:id="@+id/etxt_Nombre"
-            android:layout_width="275dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="20dp"
-            android:ems="10"
-            android:hint="@string/etxt_Nombre"
-            android:inputType="textPersonName"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etxt_Numerodoc" />
 
-        <EditText
-            android:id="@+id/etxt_Apellido"
-            android:layout_width="277dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="20dp"
-            android:ems="10"
-            android:hint="@string/etxt_Apellido"
-            android:inputType="textPersonName"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etxt_Nombre" />
+            <Spinner
+                android:id="@+id/spn_Tipodedoc"
+                android:layout_width="363dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:paddingRight="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteY="167dp" />
 
-        <EditText
-            android:id="@+id/etxt_Email"
-            android:layout_width="275dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="20dp"
-            android:ems="10"
-            android:textColor="#000000"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etxt_Apellido" />
+            <EditText
+                android:id="@+id/etxt_Numerodoc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:hint="@string/etxt_Numerodoc"
+                android:inputType="number"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spn_Tipodedoc" />
 
-        <Spinner
-            android:id="@+id/spn_Ciudad"
-            android:layout_width="352dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="40dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etxt_Email" />
+            <EditText
+                android:id="@+id/etxt_Nombre"
+                android:layout_width="275dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:hint="@string/etxt_Nombre"
+                android:inputType="textPersonName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etxt_Numerodoc" />
 
-        <Spinner
-            android:id="@+id/spn_TipoDeAdjunto"
-            android:layout_width="356dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="40dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spn_Ciudad" />
+            <EditText
+                android:id="@+id/etxt_Apellido"
+                android:layout_width="277dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:hint="@string/etxt_Apellido"
+                android:inputType="textPersonName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etxt_Nombre" />
 
-        <Button
-            android:id="@+id/btn_Adjunto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="24dp"
-            android:background="@color/purple_500"
-            android:text="@string/btn_Adjunto"
-            android:textColor="#FFFFFF"
-            app:layout_constraintBottom_toTopOf="@+id/btn_enviarDoc"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spn_TipoDeAdjunto"
-            app:layout_constraintVertical_bias="1.0" />
+            <EditText
+                android:id="@+id/etxt_Email"
+                android:layout_width="275dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:textColor="#000000"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etxt_Apellido" />
 
-        <Button
-            android:id="@+id/btn_enviarDoc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/redondear"
-            android:text="@string/btn_enviarDoc"
-            android:textColor="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            <Spinner
+                android:id="@+id/spn_Ciudad"
+                android:layout_width="352dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etxt_Email" />
 
-        <ImageView
-            android:id="@+id/btn_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            <Spinner
+                android:id="@+id/spn_TipoDeAdjunto"
+                android:layout_width="356dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spn_Ciudad" />
 
-            app:srcCompat="@drawable/cam" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/btn_Adjunto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="24dp"
+                android:background="@color/purple_500"
+                android:text="@string/btn_Adjunto"
+                android:textColor="#FFFFFF"
+                app:layout_constraintBottom_toTopOf="@+id/btn_enviarDoc"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spn_TipoDeAdjunto"
+                app:layout_constraintVertical_bias="1.0" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:id="@+id/btn_enviarDoc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/redondear"
+                android:text="@string/btn_enviarDoc"
+                android:textColor="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:id="@+id/img_Foto"
+                android:layout_width="326dp"
+                android:layout_height="170dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="20dp"
+
+                />
+        </LinearLayout>
+</ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

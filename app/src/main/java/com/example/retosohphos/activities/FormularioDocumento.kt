@@ -1,9 +1,12 @@
 package com.example.retosohphos.activities
 
 import android.Manifest
+import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +21,7 @@ import com.example.retosohphos.R
 class FormularioDocumento : AppCompatActivity() {
     private val REQUEST_CAMERA=1
     var foto: Uri? =null
+    var mediaRuta: String? =null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +29,12 @@ class FormularioDocumento : AppCompatActivity() {
 
         val objetoIntent:Intent=intent
         var correo=objetoIntent.getStringExtra("Correo")
+        var Nombre=objetoIntent.getStringExtra("Nombre")
+        var Apellido=objetoIntent.getStringExtra("Apellido")
+        val txt_Nombre=findViewById<TextView>(R.id.etxt_Nombre)
+        txt_Nombre.text=Nombre
+        val txt_Apellido=findViewById<TextView>(R.id.etxt_Apellido)
+        txt_Apellido.text=Apellido
         val txt_email=findViewById<TextView>(R.id.etxt_Email)
         txt_email.text=correo
 
@@ -53,7 +63,8 @@ class FormularioDocumento : AppCompatActivity() {
                 p2: Int,
                 p3: Long
             ) {
-                Toast.makeText( this@FormularioDocumento, Listadoc[p2],Toast.LENGTH_LONG).show()
+                //Toast.makeText( this@FormularioDocumento, Listadoc[p2],Toast.LENGTH_SHORT).show()
+                Log.d("spinnerT","${Listadoc[p2]}")
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -70,7 +81,8 @@ class FormularioDocumento : AppCompatActivity() {
                 p2: Int,
                 p3: Long
             ) {
-                Toast.makeText( this@FormularioDocumento, ListaCiudad[p2],Toast.LENGTH_LONG).show()
+                //Toast.makeText( this@FormularioDocumento, ListaCiudad[p2],Toast.LENGTH_LONG).show()
+                Log.d("spinnerC","${ListaCiudad[p2]}")
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -89,6 +101,7 @@ class FormularioDocumento : AppCompatActivity() {
             ) {
                 //ver cuales estan seleccionados
                 //Toast.makeText( this@FormularioDocumento, ListaAdjunto[p2],Toast.LENGTH_LONG).show()
+                Log.d("spinnerTipo","${ListaAdjunto[p2]}")
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -106,10 +119,19 @@ class FormularioDocumento : AppCompatActivity() {
         val btn_atras=findViewById<ImageView>(R.id.btn_atras)
         btn_atras.setOnClickListener{
              val atras= Intent(this,menu::class.java)
+            atras.putExtra("Nombre",Nombre)
             startActivity(atras)
         }
+        val btn_enfo=findViewById<Button>(R.id.btn_enviarDoc)
+        btn_enfo.setOnClickListener{
+            val atras1= Intent(this,menu::class.java)
+            atras1.putExtra("Nombre",Nombre)
+            startActivity(atras1)
+        }
+        abrirGaleria()
 
     }
+
     private fun camara_click(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if (checkSelfPermission(Manifest.permission.CAMERA)==PackageManager.PERMISSION_DENIED
@@ -135,6 +157,62 @@ class FormularioDocumento : AppCompatActivity() {
         Log.d("foto guardad"," ${foto} O ${camaraIntent} .")
     }
 
+    //Abrir Galeria
+    private fun abrirGaleria(){
+        val btn_adjunto=findViewById<Button>(R.id.btn_Adjunto)
+        btn_adjunto.setOnClickListener(){
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)==PackageManager.PERMISSION_DENIED){
+                    solicitudPermiso()
+                }else{
+                    mostrarGaleria()
+                }
+        }else{
+            mostrarGaleria()
+        }
+    }}
+
+    private fun mostrarGaleria(){
+        val intentGaleria=Intent(Intent.ACTION_PICK)
+        intentGaleria.type="image/*"
+        startActivityForResult(intentGaleria,REQUEST_CAMERA)
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode==Activity.RESULT_OK && requestCode==REQUEST_CAMERA){
+            /*if (data!=null){
+                val selectImage=data.data
+                val rutaImg=arrayOf(MediaStore.Images.Media.DATA)
+
+                val cursor=contentResolver.query(selectImage!!,rutaImg,null, null,null)
+                    assert(cursor !=null)
+                cursor!!.moveToFirst()
+
+                val colum=cursor.getColumnIndex(rutaImg[0])
+                mediaRuta=cursor.getString(colum)
+
+
+                val img_foto=findViewById<ImageView>(R.id.img_Foto)
+                val bit=MediaStore.Images.Media.getBitmap(this.getContentResolver())
+                    img_foto.setImageBitmap(BitmapFactory.decodeFile(mediaRuta))
+                cursor.close()
+                Log.d("imagenr","${mediaRuta}")
+                Log.d("bit","$bit")
+
+            }*/
+            val img_foto=findViewById<ImageView>(R.id.img_Foto)
+            img_foto.setImageURI(data?.data)
+            Log.d("imagen","${data?.data}")
+        }
+        if(resultCode==Activity.RESULT_OK && requestCode==REQUEST_CAMERA){
+            val img_foto=findViewById<ImageView>(R.id.img_Foto)
+            img_foto.setImageURI(foto)
+            Log.d("imagen","${foto}")
+        }
+    }
 
     //Pemisos
     private fun permisoCamara()=ActivityCompat.checkSelfPermission(this,Manifest.permission.CAMERA)==PackageManager.PERMISSION_GRANTED
