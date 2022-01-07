@@ -12,11 +12,14 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import com.example.retosohphos.R
+import java.io.ByteArrayOutputStream
+import java.lang.Exception
 
 class FormularioDocumento : AppCompatActivity() {
     private val REQUEST_CAMERA=1
@@ -183,8 +186,8 @@ class FormularioDocumento : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode==Activity.RESULT_OK && requestCode==REQUEST_CAMERA){
-            /*if (data!=null){
-                val selectImage=data.data
+            if (data!=null){
+                /*val selectImage=data.data
                 val rutaImg=arrayOf(MediaStore.Images.Media.DATA)
 
                 val cursor=contentResolver.query(selectImage!!,rutaImg,null, null,null)
@@ -192,25 +195,39 @@ class FormularioDocumento : AppCompatActivity() {
                 cursor!!.moveToFirst()
 
                 val colum=cursor.getColumnIndex(rutaImg[0])
-                mediaRuta=cursor.getString(colum)
-
-
+                mediaRuta=cursor.getString(colum)*/
+                val stream: ByteArrayOutputStream? =null
                 val img_foto=findViewById<ImageView>(R.id.img_Foto)
-                val bit=MediaStore.Images.Media.getBitmap(this.getContentResolver())
-                    img_foto.setImageBitmap(BitmapFactory.decodeFile(mediaRuta))
-                cursor.close()
-                Log.d("imagenr","${mediaRuta}")
-                Log.d("bit","$bit")
 
-            }*/
-            val img_foto=findViewById<ImageView>(R.id.img_Foto)
+                val imgUri=data?.data
+                    try {
+
+                        val bit=MediaStore.Images.Media.getBitmap(contentResolver,imgUri)
+                        img_foto.setImageBitmap(bit)
+                        bit.compress(Bitmap.CompressFormat.JPEG,100,stream)
+                        val bytes= stream?.toByteArray()
+                        val imagenB64=Base64.encodeToString(bytes,Base64.DEFAULT)
+                        Log.d("imagenr","${imgUri} y ${imagenB64}")
+
+                    }catch (e:Exception){
+                        e.printStackTrace()
+                    }
+
+
+                    //img_foto.setImageBitmap(BitmapFactory.decodeFile(mediaRuta))
+                //cursor.close()
+
+                //Log.d("bit","$bit")
+
+            }
+            /*val img_foto=findViewById<ImageView>(R.id.img_Foto)
             img_foto.setImageURI(data?.data)
-            Log.d("imagen","${data?.data}")
+            Log.d("imagen","${img_foto}")*/
         }
         if(resultCode==Activity.RESULT_OK && requestCode==REQUEST_CAMERA){
             val img_foto=findViewById<ImageView>(R.id.img_Foto)
             img_foto.setImageURI(foto)
-            Log.d("imagen","${foto}")
+            Log.d("imagen2","${foto}")
         }
     }
 

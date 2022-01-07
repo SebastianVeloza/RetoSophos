@@ -6,8 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".activities.menu">
-    <include
-        lay>
+
 
     <TextView
         android:id="@+id/txt_Nombre"
@@ -119,5 +118,5 @@
         app:layout_constraintStart_toEndOf="@+id/txt_oficinas"
         app:layout_constraintTop_toBottomOf="@+id/btn_ver" />
 
-    
+
 </androidx.constraintlayout.widget.ConstraintLayout>
