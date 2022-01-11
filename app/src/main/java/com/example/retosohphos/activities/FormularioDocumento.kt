@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Base64
 import android.util.Log
@@ -186,8 +187,8 @@ class FormularioDocumento : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode==Activity.RESULT_OK && requestCode==REQUEST_CAMERA){
-            if (data!=null){
-                /*val selectImage=data.data
+            /*if (data!=null){
+                val selectImage=data.data
                 val rutaImg=arrayOf(MediaStore.Images.Media.DATA)
 
                 val cursor=contentResolver.query(selectImage!!,rutaImg,null, null,null)
@@ -196,21 +197,26 @@ class FormularioDocumento : AppCompatActivity() {
 
                 val colum=cursor.getColumnIndex(rutaImg[0])
                 mediaRuta=cursor.getString(colum)*/
+
                 val stream: ByteArrayOutputStream? =null
                 val img_foto=findViewById<ImageView>(R.id.img_Foto)
 
                 val imgUri=data?.data
+
                     try {
 
                         val bit=MediaStore.Images.Media.getBitmap(contentResolver,imgUri)
+                        //val bit3=Environment.getExternalStorageState(imgUri)
                         img_foto.setImageBitmap(bit)
-                        bit.compress(Bitmap.CompressFormat.JPEG,100,stream)
+                        val bit2=BitmapFactory.decodeFile(imgUri.toString());
+                        bit2.compress(Bitmap.CompressFormat.JPEG,100,stream)
                         val bytes= stream?.toByteArray()
                         val imagenB64=Base64.encodeToString(bytes,Base64.DEFAULT)
-                        Log.d("imagenr","${imgUri} y ${imagenB64}")
+                        Log.d("imagenr","${imgUri} y ${imagenB64} bittt ${bit2}")
 
                     }catch (e:Exception){
                         e.printStackTrace()
+                        Log.d("Error2","No funciono")
                     }
 
 
@@ -219,15 +225,30 @@ class FormularioDocumento : AppCompatActivity() {
 
                 //Log.d("bit","$bit")
 
-            }
-            /*val img_foto=findViewById<ImageView>(R.id.img_Foto)
+            /*}
+            val img_foto=findViewById<ImageView>(R.id.img_Foto)
             img_foto.setImageURI(data?.data)
             Log.d("imagen","${img_foto}")*/
         }
         if(resultCode==Activity.RESULT_OK && requestCode==REQUEST_CAMERA){
+            val stream: ByteArrayOutputStream? =null
             val img_foto=findViewById<ImageView>(R.id.img_Foto)
-            img_foto.setImageURI(foto)
+            //img_foto.setImageURI(foto)
             Log.d("imagen2","${foto}")
+            try {
+
+                val bit=MediaStore.Images.Media.getBitmap(contentResolver,foto)
+                img_foto.setImageBitmap(bit)
+                val bit2=BitmapFactory.decodeFile(foto.toString());
+                bit2.compress(Bitmap.CompressFormat.JPEG,100,stream)
+                val bytes= stream?.toByteArray()
+                val imagenB64=Base64.encodeToString(bytes,Base64.DEFAULT)
+                Log.d("imagenr","${bit} y ${imagenB64} bittt ${bit2}")
+
+            }catch (e:Exception){
+                e.printStackTrace()
+                Log.d("Error3","No funciono")
+            }
         }
     }
 

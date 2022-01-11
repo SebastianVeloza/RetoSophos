@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    /*private fun huella(){
+   /* private fun huella(){
         executor =
             ContextCompat.getMainExecutor(this)
         biometricPrompt = BiometricPrompt(this, executor,
@@ -73,6 +73,7 @@ class MainActivity : AppCompatActivity() {
                 override fun onAuthenticationSucceeded(
                     result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
+                    pasar()
                     Toast.makeText(applicationContext,
                         "Autenticacion Exitosa", Toast.LENGTH_SHORT)
                         .show()
