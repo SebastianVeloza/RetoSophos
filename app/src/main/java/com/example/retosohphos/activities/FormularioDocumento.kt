@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.provider.MediaStore.Images.Media.getBitmap
 import android.util.Base64
 import android.util.Log
 import android.view.Menu
@@ -20,7 +21,12 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
+import com.example.retosohphos.Api.RetrofitApi
 import com.example.retosohphos.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import java.lang.Exception
 
@@ -28,6 +34,7 @@ class FormularioDocumento : AppCompatActivity() {
     private val REQUEST_CAMERA=1
     var foto: Uri? =null
     var mediaRuta: String? =null
+    //val img_foto=findViewById<ImageView>(R.id.img_Foto)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -140,6 +147,31 @@ class FormularioDocumento : AppCompatActivity() {
 
     }
 
+    fun login(id:String,clave:String){
+
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val call= RetrofitApi.api.postDocumentos()
+            nombre= call.body()?.nombre
+            apellido=call.body()?.apellido
+            Log.d("usuario","${nombre}.")
+            runOnUiThread{
+                if (call.isSuccessful){
+                    pasar()
+
+
+
+
+                }else{
+                    showError()
+                }
+            }
+
+
+        }
+
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu,menu)
@@ -222,27 +254,27 @@ class FormularioDocumento : AppCompatActivity() {
 
                 val colum=cursor.getColumnIndex(rutaImg[0])
                 mediaRuta=cursor.getString(colum)*/
-
-                val stream: ByteArrayOutputStream? =null
+            if (data!=null){
+                val stream = ByteArrayOutputStream()
                 val img_foto=findViewById<ImageView>(R.id.img_Foto)
 
-                val imgUri=data?.data
+                val imgUri=data.data
 
                     try {
 
-                        val bit=MediaStore.Images.Media.getBitmap(contentResolver,imgUri)
+                        val bit=getBitmap(contentResolver,imgUri)
                         //val bit3=Environment.getExternalStorageState(imgUri)
                         img_foto.setImageBitmap(bit)
-                        val bit2=BitmapFactory.decodeFile(imgUri.toString());
-                        bit2.compress(Bitmap.CompressFormat.JPEG,100,stream)
-                        val bytes= stream?.toByteArray()
-                        val imagenB64=Base64.encodeToString(bytes,Base64.DEFAULT)
-                        Log.d("imagenr","${imgUri} y ${imagenB64} bittt ${bit2}")
+                        bit.compress(Bitmap.CompressFormat.JPEG, 50, stream)
+                        val byteArray = stream?.toByteArray()
+                        val image64 = Base64.encodeToString(byteArray, Base64.DEFAULT)
+                        val byteArrayDecoded = Base64.decode(image64, Base64.DEFAULT)
+                        Log.d("imagenr"," ${image64}")
 
                     }catch (e:Exception){
                         e.printStackTrace()
                         Log.d("Error2","No funciono")
-                    }
+                    }}
 
 
                     //img_foto.setImageBitmap(BitmapFactory.decodeFile(mediaRuta))
@@ -253,10 +285,58 @@ class FormularioDocumento : AppCompatActivity() {
             /*}
             val img_foto=findViewById<ImageView>(R.id.img_Foto)
             img_foto.setImageURI(data?.data)
-            Log.d("imagen","${img_foto}")*/
+            Log.d("imagen","${img_foto}")
+
+
+
+            Metodo 2
+            // Override function that handles the result of intent
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    Log.d("SendDocument", "onActivityResult")
+    // Check the request code and the activity result
+    if (requestCode == REQUEST_CODE_C && resultCode == Activity.RESULT_OK) { camara
+        // Get image bitmap
+        val takenImage = data?.extras?.get("data") as Bitmap
+        // Compress and transform bitmap to base 64
+        transformImage(takenImage)
+    } else if (requestCode == REQUEST_CODE_F && resultCode == Activity.RESULT_OK) { Galeria
+        if (data != null) {
+            // Get image uri
+            val uri = data.data
+            // Transform uri to bitmap
+            val takenImage = getBitmap(requireContext().contentResolver, uri)
+            // Compress and transform bitmap to base 64
+            transformImage(takenImage)
+        }
+    } else {
+        // call default method
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+}
+// Compress and transform bitmap to base 64
+private fun transformImage(bitmap: Bitmap) {
+    Log.d("SendDocument", "transformImage")
+    // Initialize output stream
+    val stream = ByteArrayOutputStream()
+    // Compress image
+    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream)
+    // Compress image to bytearray
+    val byteArray = stream.toByteArray()
+    // transform the bytearray to base64
+    val image64 = Base64.encodeToString(byteArray, Base64.DEFAULT)
+    // Store the image value
+    sharedViewModel.setImage64(image64)
+    // Decode Image
+    val byteArrayDecoded = Base64.decode(image64, Base64.DEFAULT)
+    // byte array to bitmap
+    val takenImage = BitmapFactory.decodeByteArray(byteArrayDecoded, 0, byteArrayDecoded.size)
+    binding.imageViewTest.setImageBitmap(takenImage)
+}
+
+            */
         }
         if(resultCode==Activity.RESULT_OK && requestCode==REQUEST_CAMERA){
-            val stream: ByteArrayOutputStream? =null
+            val stream = ByteArrayOutputStream()
             val img_foto=findViewById<ImageView>(R.id.img_Foto)
             //img_foto.setImageURI(foto)
             Log.d("imagen2","${foto}")
@@ -264,11 +344,17 @@ class FormularioDocumento : AppCompatActivity() {
 
                 val bit=MediaStore.Images.Media.getBitmap(contentResolver,foto)
                 img_foto.setImageBitmap(bit)
-                val bit2=BitmapFactory.decodeFile(foto.toString());
+                bit.compress(Bitmap.CompressFormat.JPEG, 50, stream)
+                val byteArray = stream.toByteArray()
+                val image64 = Base64.encodeToString(byteArray, Base64.DEFAULT)
+                val byteArrayDecoded = Base64.decode(image64, Base64.DEFAULT)
+                Log.d("imagenr"," ${image64}")
+
+                /*val bit2=BitmapFactory.decodeFile(foto.toString());
                 bit2.compress(Bitmap.CompressFormat.JPEG,100,stream)
                 val bytes= stream?.toByteArray()
                 val imagenB64=Base64.encodeToString(bytes,Base64.DEFAULT)
-                Log.d("imagenr","${bit} y ${imagenB64} bittt ${bit2}")
+                Log.d("imagenr","${bit} y ${imagenB64} bittt ${bit2}")*/
 
             }catch (e:Exception){
                 e.printStackTrace()
@@ -276,6 +362,25 @@ class FormularioDocumento : AppCompatActivity() {
             }
         }
     }
+
+    /*private fun transformImage(bitmap: Bitmap) {
+        Log.d("SendDocument", "transformImage")
+        // Initialize output stream
+        val stream = ByteArrayOutputStream()
+        // Compress image
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream)
+        // Compress image to bytearray
+        val byteArray = stream.toByteArray()
+        // transform the bytearray to base64
+        val image64 = Base64.encodeToString(byteArray, Base64.DEFAULT)
+        // Store the image value
+        sharedViewModel.setImage64(image64)
+        // Decode Image
+        val byteArrayDecoded = Base64.decode(image64, Base64.DEFAULT)
+        // byte array to bitmap
+        val takenImage = BitmapFactory.decodeByteArray(byteArrayDecoded, 0, byteArrayDecoded.size)
+        binding.imageViewTest.setImageBitmap(takenImage)
+    }*/
 
     //Pemisos
     private fun permisoCamara()=ActivityCompat.checkSelfPermission(this,Manifest.permission.CAMERA)==PackageManager.PERMISSION_GRANTED

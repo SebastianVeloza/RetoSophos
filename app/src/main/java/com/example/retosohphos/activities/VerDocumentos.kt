@@ -25,7 +25,7 @@ class VerDocumentos : AppCompatActivity() {
         if (item.itemId==R.id.action1){
             startActivity(Intent(this,FormularioDocumento::class.java))
         }
-        
+
         if (item.itemId==R.id.action3){
             startActivity(Intent(this,Oficinas::class.java))
         }
