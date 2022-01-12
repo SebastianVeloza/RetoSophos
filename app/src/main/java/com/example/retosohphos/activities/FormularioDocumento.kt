@@ -22,11 +22,7 @@ import android.view.View
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContentProviderCompat.requireContext
-import com.example.retosohphos.Api.RetrofitApi
 import com.example.retosohphos.R
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import java.lang.Exception
 
@@ -147,30 +143,7 @@ class FormularioDocumento : AppCompatActivity() {
 
     }
 
-    fun login(id:String,clave:String){
 
-
-        CoroutineScope(Dispatchers.IO).launch {
-            val call= RetrofitApi.api.postDocumentos()
-            nombre= call.body()?.nombre
-            apellido=call.body()?.apellido
-            Log.d("usuario","${nombre}.")
-            runOnUiThread{
-                if (call.isSuccessful){
-                    pasar()
-
-
-
-
-                }else{
-                    showError()
-                }
-            }
-
-
-        }
-
-    }
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
