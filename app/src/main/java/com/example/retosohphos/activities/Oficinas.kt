@@ -24,6 +24,7 @@ import java.lang.Exception
 
 class Oficinas : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener {
 
+
     private lateinit var map: GoogleMap
     var ciudad: String? =null
         get() = field
@@ -34,6 +35,7 @@ class Oficinas : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocation
         setContentView(R.layout.activity_oficinas)
         crearMapa()
         marcadores()
+
     }
 
     private fun crearMapa() {

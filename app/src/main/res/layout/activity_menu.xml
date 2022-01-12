@@ -6,6 +6,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".activities.menu">
+    <include
+        layout="@layout/action_bar_toolbar"/>
 
 
     <TextView
@@ -13,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="60dp"
         android:text="@string/txt_Nombre"
         android:textColor="#000000"
         android:textSize="16sp"
@@ -82,7 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="88dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="88dp"
         android:background="#5C93F9"
         android:text="@string/btn_enviar"
@@ -94,14 +96,14 @@
 
     <Button
         android:id="@+id/btn_ver"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_width="97dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="48dp"
         android:background="#F930DE"
         android:text="@string/btn_ver"
         android:textColor="#F8F8F8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.562"
+        app:layout_constraintHorizontal_bias="0.598"
         app:layout_constraintStart_toEndOf="@+id/txt_ver"
         app:layout_constraintTop_toBottomOf="@+id/btn_enviar" />
 
@@ -109,12 +111,12 @@
         android:id="@+id/btn_oficinas"
         android:layout_width="102dp"
         android:layout_height="52dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="32dp"
         android:backgroundTint="#144AF3"
         android:text="@string/btn_oficinas"
         android:textColor="#FFFDFD"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.664"
+        app:layout_constraintHorizontal_bias="0.701"
         app:layout_constraintStart_toEndOf="@+id/txt_oficinas"
         app:layout_constraintTop_toBottomOf="@+id/btn_ver" />
 

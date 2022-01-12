@@ -15,6 +15,8 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.util.Base64
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.core.app.ActivityCompat
@@ -30,6 +32,8 @@ class FormularioDocumento : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_formulario_documento)
+
+        MyToolBar().show(this,"Envío de Documentación",true)
 
         val objetoIntent:Intent=intent
         var correo=objetoIntent.getStringExtra("Correo")
@@ -120,12 +124,12 @@ class FormularioDocumento : AppCompatActivity() {
             camara_click()
 
         }
-        val btn_atras=findViewById<ImageView>(R.id.btn_atras)
+        /*val btn_atras=findViewById<ImageView>(R.id.btn_atras)
         btn_atras.setOnClickListener{
              val atras= Intent(this,menu::class.java)
             atras.putExtra("Nombre",Nombre)
             startActivity(atras)
-        }
+        }*/
         val btn_enfo=findViewById<Button>(R.id.btn_enviarDoc)
         btn_enfo.setOnClickListener{
             val atras1= Intent(this,menu::class.java)
@@ -134,6 +138,27 @@ class FormularioDocumento : AppCompatActivity() {
         }
         abrirGaleria()
 
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu,menu)
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        if (item.itemId==R.id.action2){
+            startActivity(Intent(this,VerDocumentos::class.java))
+        }
+        if (item.itemId==R.id.action3){
+            startActivity(Intent(this,Oficinas::class.java))
+        }
+        if (item.itemId==R.id.action4){
+            startActivity(Intent(this,MainActivity::class.java))
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun camara_click(){

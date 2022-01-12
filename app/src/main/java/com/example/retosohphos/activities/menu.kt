@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
@@ -17,6 +18,10 @@ class menu : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
+
+        MyToolBar().show(this,"Menú",false)
+
+
 
         val objetoIntent:Intent=intent
         var Nombre=objetoIntent.getStringExtra("Nombre")
@@ -62,6 +67,22 @@ class menu : AppCompatActivity() {
         menuInflater.inflate(R.menu.main_menu,menu)
 
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId==R.id.action1){
+            startActivity(Intent(this,FormularioDocumento::class.java))
+        }
+        if (item.itemId==R.id.action2){
+            startActivity(Intent(this,VerDocumentos::class.java))
+        }
+        if (item.itemId==R.id.action3){
+            startActivity(Intent(this,Oficinas::class.java))
+        }
+        if (item.itemId==R.id.action4){
+            startActivity(Intent(this,MainActivity::class.java))
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun permisoLocacion()=
