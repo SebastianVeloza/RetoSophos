@@ -1,5 +1,5 @@
 package com.example.retosohphos.models
 
-data class DocumentosResponse(
+data class DocumentosPostResponse(
     val put: Boolean
 )

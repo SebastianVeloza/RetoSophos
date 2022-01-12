@@ -1,6 +1,6 @@
 package com.example.retosohphos.models
 
-data class documentosRequest(
+data class DocumentosPostRequest(
     val Adjunto: String,
     val Apellido: String,
     val Ciudad: String,

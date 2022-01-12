@@ -22,7 +22,9 @@ import android.view.View
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContentProviderCompat.requireContext
+import com.example.retosohphos.Api.RetrofitApi
 import com.example.retosohphos.R
+import com.example.retosohphos.models.DocumentosPostRequest
 import java.io.ByteArrayOutputStream
 import java.lang.Exception
 
@@ -49,6 +51,7 @@ class FormularioDocumento : AppCompatActivity() {
         val txt_email=findViewById<TextView>(R.id.etxt_Email)
         txt_email.text=correo
 
+        val documento=findViewById<EditText>(R.id.etxt_Numerodoc)
         val TipoDoc= findViewById<Spinner>(R.id.spn_Tipodedoc)
         val Ciudad= findViewById<Spinner>(R.id.spn_Ciudad)
         val TipoAdjunto= findViewById<Spinner>(R.id.spn_TipoDeAdjunto)
@@ -119,6 +122,7 @@ class FormularioDocumento : AppCompatActivity() {
                 TODO("Not yet implemented")
             }
 
+
         }
 
         val btn_camara=findViewById<ImageView>(R.id.btn_camara)
@@ -141,8 +145,23 @@ class FormularioDocumento : AppCompatActivity() {
         }
         abrirGaleria()
 
-    }
 
+
+        val tipoid=Listadoc.toString()
+        val identificacion=documento.text.toString()
+        val NombreF=txt_Nombre.text.toString()
+        val ApellidoF=txt_Apellido.text.toString()
+        val Correo=txt_email.text.toString()
+        val CiudadF: String =ListaCiudad.toString()
+        val TipodeAdjunto=ListaAdjunto.toString()
+        //val Adjunto=image64
+
+    }
+    fun pasar(tipoid:String){
+
+
+
+    }
 
 
 
