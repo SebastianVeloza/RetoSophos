@@ -178,7 +178,7 @@ class FormularioDocumento : AppCompatActivity() {
     }
     fun postDocumentos(tipoid: String,identificacion:String,nombre:String,apellido:String,correo:String,ciudad:String,tipoDeAdjunto:String) {
         val adjunto = image64
-        if (tipoid == null && identificacion == null && nombre == null && apellido == null && correo == null && ciudad == null && tipoDeAdjunto == null && adjunto == null) {
+        if (tipoid == null && identificacion == null && identificacion=="" && nombre == null && nombre=="" && apellido == null && apellido=="" && correo == null && ciudad == null && tipoDeAdjunto == null && adjunto == null) {
             Toast.makeText(
                 this,
                 "Algun campo se encuentra vacio,por favor vuelve a intentarlo",
@@ -328,8 +328,8 @@ class FormularioDocumento : AppCompatActivity() {
                 val stream = ByteArrayOutputStream()
                 val img_foto=findViewById<ImageView>(R.id.img_Foto)
 
-                val imgUri=data.data
-                val imgsize=imgUri/1024
+                var  imgUri=data.data
+                val imgsize=imgUri.toString().toDouble()/1024
 
                     try {
                         if (imgsize<= 150) {
@@ -417,7 +417,7 @@ private fun transformImage(bitmap: Bitmap) {
         if(resultCode==Activity.RESULT_OK && requestCode==REQUEST_CAMERA){
             val stream = ByteArrayOutputStream()
             val img_foto=findViewById<ImageView>(R.id.img_Foto)
-            val imgsize=foto/1024
+            var imgsize=foto.toString().toDouble()/1024
             Log.d("imagen2","${foto}")
             try {
                 if (imgsize <= 150) {

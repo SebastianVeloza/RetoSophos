@@ -1,9 +1,6 @@
 package com.example.retosohphos.Api
 
-import com.example.retosohphos.models.DocumentosPostResponse
-import com.example.retosohphos.models.ListaOficina
-import com.example.retosohphos.models.UserResponse
-import com.example.retosohphos.models.DocumentosPostRequest
+import com.example.retosohphos.models.*
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -25,4 +22,14 @@ interface sophosApi {
     suspend fun postDocumentos(
         @Body DocumentosPostRequest: DocumentosPostRequest
     ):DocumentosPostResponse
+
+    @GET("RS_Documentos")
+    suspend fun getDocumentosCorreo(
+        @Query("correo")correo: String
+    ):DocumentosGetResponseLista
+
+    @GET("RS_Documentos")
+    suspend fun getDocumentosIdRegistro(
+        @Query("idRegistro")idRegistro: String
+    ):DocumentosGetResponseLista
 }

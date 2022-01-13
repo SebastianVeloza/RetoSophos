@@ -8,9 +8,12 @@ import android.view.MenuItem
 import com.example.retosohphos.R
 
 class VerDocumentos : AppCompatActivity() {
+    var correo:String?=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ver_documentos)
+        val objetoIntent:Intent=intent
+        correo=objetoIntent.getStringExtra("Correo")
 
         MyToolBar().show(this,"Ver Documentos",true)
     }
