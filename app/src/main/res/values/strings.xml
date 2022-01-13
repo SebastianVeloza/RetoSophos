@@ -14,33 +14,31 @@
     <string name="txt_oficinas">Oficinas</string>
     <string name="btn_oficinas">Ingresar</string>
 
-    <string name="txt_Titulo">Envío de Documentación</string>
+
     <string name="etxt_Numerodoc">Numero de Documento</string>
     <string name="etxt_Nombre">Nombres</string>
     <string name="etxt_Apellido">Apellidos</string>
     <string name="etxt_Email">Email</string>
-    <string-array name="spn_Tipodedoc1">
-        <item>CC</item>
-        <item>TI</item>
-        <item>CE</item>
-        <item>PA</item>
-    </string-array>
+    <string name="txt_doc">Selecciona el tipo de documento: </string>
+    <string name="rbtn_cc">CC</string>
+    <string name="rbtn_ti">TI</string>
+    <string name="rbtn_ce">CE</string>
+    <string name="rbtn_pa">PA</string>
+    <string name="txt_Ciudad">Selecciona la ciudad en que te encuentras: </string>
+    <string name="rbtn_chile">Chile</string>
+    <string name="rbtn_usa">Estados Unidos</string>
+    <string name="rbtn_bta">Bogotá</string>
+    <string name="rbtn_md">Medellín</string>
+    <string name="rbtn_pan">Panamá</string>
+    <string name="rbtn_mx">México</string>
+    <string name="txt_tipoAdjunto">Selecciona el tipo de adjunto:</string>
 
-    <string-array name="spn_Ciudad1">
+    <string name="rbtn_cert">Certificado de cuenta</string>
+    <string name="rbtn_ced">Cédula</string>
+    <string name="rbtn_fac">Factura</string>
+    <string name="rbtn_inc">Incapacidad</string>
 
-    <item>Chile</item>
-    <item>Estados Unidos</item>
-    <item>Bogotá</item>
-    <item>Medellín</item>
-    <item>Panamá</item>
-    <item>México</item>
-    </string-array>
-    <string-array name="spn_TipoDeAdjunto1">
-        <item>Certificado de cuenta</item>
-        <item>Cédula</item>
-        <item>Factura</item>
-        <item>Incapacidad</item>
-    </string-array>
+
     <string name="btn_enviarDoc">Enviar</string>
     <string name="btn_Adjunto">Adjuntar</string>
 

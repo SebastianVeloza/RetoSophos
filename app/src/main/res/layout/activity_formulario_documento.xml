@@ -56,21 +56,52 @@
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/cam" />
 
-
-
-
-
-            <Spinner
-                android:id="@+id/spn_Tipodedoc"
-                android:layout_width="363dp"
+            <TextView
+                android:id="@+id/txt_doc"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:paddingRight="50dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="MissingConstraints"
-                tools:layout_editor_absoluteY="167dp" />
+                android:text="@string/txt_doc"
+                android:layout_marginTop="20dp"
+                android:textColor="#414247"
+                android:textSize="15dp"
+                tools:layout_editor_absoluteY="48dp"
+                tools:ignore="MissingConstraints" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            <RadioGroup
+                android:id="@+id/rg_documentos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rbtn_cc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rbtn_cc" />
+
+                <RadioButton
+                    android:id="@+id/rbtn_ti"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rbtn_ti" />
+
+                <RadioButton
+                    android:id="@+id/rbtn_ce"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rbtn_ce" />
+
+                <RadioButton
+                    android:id="@+id/rbtn_pa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rbtn_pa" />
+            </RadioGroup>
+        </LinearLayout>
 
             <EditText
                 android:id="@+id/etxt_Numerodoc"
@@ -114,31 +145,114 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
+                android:hint="@string/etxt_Email"
                 android:ems="10"
                 android:textColor="#000000"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etxt_Apellido" />
 
-            <Spinner
-                android:id="@+id/spn_Ciudad"
-                android:layout_width="352dp"
+            <TextView
+                android:id="@+id/txt_Ciudad"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:text="@string/txt_Ciudad"
                 android:layout_marginTop="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etxt_Email" />
+                android:textColor="#414247"
+                android:textSize="15dp"
+                tools:layout_editor_absoluteY="48dp"
+                tools:ignore="MissingConstraints" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <Spinner
-                android:id="@+id/spn_TipoDeAdjunto"
-                android:layout_width="356dp"
+                <RadioGroup
+                    android:id="@+id/rg_ciudad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/rbtn_chile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rbtn_chile" />
+
+                    <RadioButton
+                        android:id="@+id/rbtn_usa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rbtn_usa" />
+
+                    <RadioButton
+                        android:id="@+id/rbtn_bta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rbtn_bta" />
+
+                    <RadioButton
+                        android:id="@+id/rbtn_md"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rbtn_md" />
+
+                    <RadioButton
+                        android:id="@+id/rbtn_pan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rbtn_pan" />
+                    <RadioButton
+                        android:id="@+id/rbtn_mx"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rbtn_mx" />
+                </RadioGroup>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/txt_tipoAdjunto"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:text="@string/txt_tipoAdjunto"
                 android:layout_marginTop="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spn_Ciudad" />
+                android:textColor="#414247"
+                android:textSize="15dp"
+                tools:layout_editor_absoluteY="48dp"
+                tools:ignore="MissingConstraints" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioGroup
+                    android:id="@+id/rg_tipoAdjunto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/rbtn_cert"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rbtn_cert" />
+
+                    <RadioButton
+                        android:id="@+id/rbtn_ced"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rbtn_ced" />
+
+                    <RadioButton
+                        android:id="@+id/rbtn_fac"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rbtn_fac" />
+
+                    <RadioButton
+                        android:id="@+id/rbtn_inc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rbtn_inc" />
+                </RadioGroup>
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btn_Adjunto"
@@ -175,6 +289,7 @@
                 android:layout_marginTop="20dp"
 
                 />
+
         </LinearLayout>
 </ScrollView>
 

@@ -25,6 +25,9 @@ import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.retosohphos.Api.RetrofitApi
 import com.example.retosohphos.R
 import com.example.retosohphos.models.DocumentosPostRequest
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import java.lang.Exception
 
@@ -32,6 +35,8 @@ class FormularioDocumento : AppCompatActivity() {
     private val REQUEST_CAMERA=1
     var foto: Uri? =null
     var mediaRuta: String? =null
+    var image64:String=""
+    var Nombre:String?=""
     //val img_foto=findViewById<ImageView>(R.id.img_Foto)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +47,7 @@ class FormularioDocumento : AppCompatActivity() {
 
         val objetoIntent:Intent=intent
         var correo=objetoIntent.getStringExtra("Correo")
-        var Nombre=objetoIntent.getStringExtra("Nombre")
+        Nombre=objetoIntent.getStringExtra("Nombre")
         var Apellido=objetoIntent.getStringExtra("Apellido")
         val txt_Nombre=findViewById<TextView>(R.id.etxt_Nombre)
         txt_Nombre.text=Nombre
@@ -52,78 +57,90 @@ class FormularioDocumento : AppCompatActivity() {
         txt_email.text=correo
 
         val documento=findViewById<EditText>(R.id.etxt_Numerodoc)
-        val TipoDoc= findViewById<Spinner>(R.id.spn_Tipodedoc)
-        val Ciudad= findViewById<Spinner>(R.id.spn_Ciudad)
-        val TipoAdjunto= findViewById<Spinner>(R.id.spn_TipoDeAdjunto)
 
-        val Listadoc= resources.getStringArray(R.array.spn_Tipodedoc1)
-        val ListaCiudad= resources.getStringArray(R.array.spn_Ciudad1)
-        val ListaAdjunto= resources.getStringArray(R.array.spn_TipoDeAdjunto1)
 
-        val adapDoc=ArrayAdapter(this,android.R.layout.simple_spinner_item,Listadoc)
-        TipoDoc.adapter=adapDoc
 
-        val adapCiudad=ArrayAdapter(this,android.R.layout.simple_spinner_item,ListaCiudad)
-        Ciudad.adapter=adapCiudad
 
-        val adapAdjunto=ArrayAdapter(this,android.R.layout.simple_spinner_item,ListaAdjunto)
-        TipoAdjunto.adapter=adapAdjunto
+        //variables Documentos
+        var TipoDoc= findViewById<RadioGroup>(R.id.rg_documentos)
+        var respuestaRbtnDocumento:String=""
+        val cc=findViewById<RadioButton>(R.id.rbtn_cc)
+        val ti=findViewById<RadioButton>(R.id.rbtn_ti)
+        val ce=findViewById<RadioButton>(R.id.rbtn_ce)
+        val pa=findViewById<RadioButton>(R.id.rbtn_pa)
 
-        TipoDoc.onItemSelectedListener=object:
-        AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(
-                p0: AdapterView<*>?,
-                p1: View?,
-                p2: Int,
-                p3: Long
-            ) {
-                //Toast.makeText( this@FormularioDocumento, Listadoc[p2],Toast.LENGTH_SHORT).show()
-                Log.d("spinnerT","${Listadoc[p2]}")
+
+        TipoDoc.setOnCheckedChangeListener { group, checkedid ->
+            if (checkedid==R.id.rbtn_cc){
+                respuestaRbtnDocumento= cc.text.toString()
             }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                TODO("Not yet implemented")
+            if (checkedid==R.id.rbtn_ti){
+                respuestaRbtnDocumento= ti.text.toString()
             }
-
+            if (checkedid==R.id.rbtn_ce){
+                respuestaRbtnDocumento= ce.text.toString()
+            }
+            if (checkedid==R.id.rbtn_pa){
+                respuestaRbtnDocumento= pa.text.toString()
+            }
         }
 
-        Ciudad.onItemSelectedListener=object:
-            AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(
-                p0: AdapterView<*>?,
-                p1: View?,
-                p2: Int,
-                p3: Long
-            ) {
-                //Toast.makeText( this@FormularioDocumento, ListaCiudad[p2],Toast.LENGTH_LONG).show()
-                Log.d("spinnerC","${ListaCiudad[p2]}")
-            }
+        //variables Ciudad
+        val Ciudad= findViewById<RadioGroup>(R.id.rg_ciudad)
+        var respuestaRbtnCiudad:String=""
+        val chile=findViewById<RadioButton>(R.id.rbtn_chile)
+        val usa=findViewById<RadioButton>(R.id.rbtn_usa)
+        val mex=findViewById<RadioButton>(R.id.rbtn_mx)
+        val medellin=findViewById<RadioButton>(R.id.rbtn_md)
+        val panama=findViewById<RadioButton>(R.id.rbtn_pan)
+        val bogota=findViewById<RadioButton>(R.id.rbtn_bta)
 
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
 
+        Ciudad.setOnCheckedChangeListener { group, checkedid ->
+            if (checkedid==R.id.rbtn_chile){
+                respuestaRbtnCiudad= chile.text.toString()
+            }
+            if (checkedid==R.id.rbtn_usa){
+                respuestaRbtnCiudad= usa.text.toString()
+            }
+            if (checkedid==R.id.rbtn_bta){
+                respuestaRbtnCiudad= bogota.text.toString()
+            }
+            if (checkedid==R.id.rbtn_md){
+            respuestaRbtnCiudad= medellin.text.toString()
+        }
+            if (checkedid==R.id.rbtn_pan){
+                respuestaRbtnCiudad= panama.text.toString()
+            }
+            if (checkedid==R.id.rbtn_mx){
+                respuestaRbtnCiudad= mex.text.toString()
+            }
         }
 
-        TipoAdjunto.onItemSelectedListener=object:
-            AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(
-                p0: AdapterView<*>?,
-                p1: View?,
-                p2: Int,
-                p3: Long
-            ) {
-                //ver cuales estan seleccionados
-                //Toast.makeText( this@FormularioDocumento, ListaAdjunto[p2],Toast.LENGTH_LONG).show()
-                Log.d("spinnerTipo","${ListaAdjunto[p2]}")
+        //variables tipoAdjunto
+        val TipoAdjunto= findViewById<RadioGroup>(R.id.rg_tipoAdjunto)
+        var respuestaRbtnTipoAdjunto:String=""
+        val certificadoCuenta=findViewById<RadioButton>(R.id.rbtn_cert)
+        val cedula=findViewById<RadioButton>(R.id.rbtn_ced)
+        val factura=findViewById<RadioButton>(R.id.rbtn_fac)
+        val incapacidad=findViewById<RadioButton>(R.id.rbtn_inc)
+
+
+        TipoAdjunto.setOnCheckedChangeListener { group, checkedid ->
+            if (checkedid==R.id.rbtn_cert){
+                respuestaRbtnTipoAdjunto= certificadoCuenta.text.toString()
             }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                TODO("Not yet implemented")
+            if (checkedid==R.id.rbtn_ced){
+                respuestaRbtnTipoAdjunto= cedula.text.toString()
             }
-
-
+            if (checkedid==R.id.rbtn_fac){
+                respuestaRbtnTipoAdjunto= factura.text.toString()
+            }
+            if (checkedid==R.id.rbtn_inc){
+                respuestaRbtnTipoAdjunto= incapacidad.text.toString()
+            }
         }
+
 
         val btn_camara=findViewById<ImageView>(R.id.btn_camara)
         btn_camara.setOnClickListener{
@@ -139,29 +156,90 @@ class FormularioDocumento : AppCompatActivity() {
         }*/
         val btn_enfo=findViewById<Button>(R.id.btn_enviarDoc)
         btn_enfo.setOnClickListener{
-            val atras1= Intent(this,menu::class.java)
-            atras1.putExtra("Nombre",Nombre)
-            startActivity(atras1)
+            val tipoid=respuestaRbtnDocumento
+            val identificacion=documento.text.toString()
+            val NombreF=txt_Nombre.text.toString()
+            val ApellidoF=txt_Apellido.text.toString()
+            val Correo=txt_email.text.toString()
+            val CiudadF: String =respuestaRbtnCiudad
+            val TipodeAdjunto=respuestaRbtnTipoAdjunto
+
+           postDocumentos(tipoid,identificacion,NombreF,ApellidoF,Correo,CiudadF,TipodeAdjunto)
+
+
+
         }
         abrirGaleria()
 
 
 
-        val tipoid=Listadoc.toString()
-        val identificacion=documento.text.toString()
-        val NombreF=txt_Nombre.text.toString()
-        val ApellidoF=txt_Apellido.text.toString()
-        val Correo=txt_email.text.toString()
-        val CiudadF: String =ListaCiudad.toString()
-        val TipodeAdjunto=ListaAdjunto.toString()
-        //val Adjunto=image64
-
-    }
-    fun pasar(tipoid:String){
-
 
 
     }
+    fun postDocumentos(tipoid: String,identificacion:String,nombre:String,apellido:String,correo:String,ciudad:String,tipoDeAdjunto:String) {
+        val adjunto = image64
+        if (tipoid == null && identificacion == null && nombre == null && apellido == null && correo == null && ciudad == null && tipoDeAdjunto == null && adjunto == null) {
+            Toast.makeText(
+                this,
+                "Algun campo se encuentra vacio,por favor vuelve a intentarlo",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        Log.d("adjunto", "adjunto ${adjunto} .")
+
+        val request = DocumentosPostRequest(
+            adjunto,
+            apellido,
+            ciudad,
+            correo,
+            identificacion,
+            nombre,
+            tipoDeAdjunto,
+            tipoid
+        )
+        Log.d("put", "put ${request} .")
+        CoroutineScope(Dispatchers.IO).launch {
+
+            try {
+                val call = RetrofitApi.api.postDocumentos(request)
+                //runOnUiThread {
+
+                runOnUiThread {
+                    if (call.put == true) {
+                        Toast.makeText(this@FormularioDocumento, "El formulario se envío satisfactoriamente", Toast.LENGTH_SHORT).show()
+                        val atras1= Intent(this@FormularioDocumento,menu::class.java)
+                        atras1.putExtra("Nombre",Nombre)
+                        startActivity(atras1)
+
+
+                    }else{
+                        Toast.makeText(this@FormularioDocumento, "Error no se pudo enviar el formulario", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+
+            } catch (Error: Exception) {
+                Log.d("Error", "Error $Error .")
+            }
+
+        }
+    }
+
+    /*private fun datos(tipoid: String,identificacion:String,nombre:String,apellido:String,correo:String,ciudad:String,tipoDeAdjunto:String){
+        if (tipoid==null&&identificacion==null&&nombre==null&&apellido==null&&correo==null&&ciudad==null&&tipoDeAdjunto==null){
+            Toast.makeText(this, "Algun campo se encuentra vacio,por favor vuelve a intentarlo", Toast.LENGTH_SHORT).show()
+        }
+        val TipoId=tipoid
+        val identificacion=identificacion
+        val nombre=nombre
+        val apellido=apellido
+        val correo=correo
+        val ciudad=ciudad
+        val tipoDeAdjunto=tipoDeAdjunto
+
+    }*/
+
+
 
 
 
@@ -251,17 +329,26 @@ class FormularioDocumento : AppCompatActivity() {
                 val img_foto=findViewById<ImageView>(R.id.img_Foto)
 
                 val imgUri=data.data
+                val imgsize=imgUri/1024
 
                     try {
+                        if (imgsize<= 150) {
 
-                        val bit=getBitmap(contentResolver,imgUri)
-                        //val bit3=Environment.getExternalStorageState(imgUri)
-                        img_foto.setImageBitmap(bit)
-                        bit.compress(Bitmap.CompressFormat.JPEG, 50, stream)
-                        val byteArray = stream?.toByteArray()
-                        val image64 = Base64.encodeToString(byteArray, Base64.DEFAULT)
-                        val byteArrayDecoded = Base64.decode(image64, Base64.DEFAULT)
-                        Log.d("imagenr"," ${image64}")
+                            val bit = getBitmap(contentResolver, imgUri)
+                            //val bit3=Environment.getExternalStorageState(imgUri)
+                            img_foto.setImageBitmap(bit)
+                            bit.compress(Bitmap.CompressFormat.JPEG, 50, stream)
+                            val byteArray = stream?.toByteArray()
+                            image64 = Base64.encodeToString(byteArray, Base64.DEFAULT)
+
+                            val byteArrayDecoded = Base64.decode(image64, Base64.DEFAULT)
+                            Log.d("imagenr", " ${image64}")
+                        }
+                        else
+                        {
+                            Toast.makeText(this, "La imagen pesa mas de 150kb", Toast.LENGTH_SHORT).show()
+
+                        }
 
                     }catch (e:Exception){
                         e.printStackTrace()
@@ -330,17 +417,22 @@ private fun transformImage(bitmap: Bitmap) {
         if(resultCode==Activity.RESULT_OK && requestCode==REQUEST_CAMERA){
             val stream = ByteArrayOutputStream()
             val img_foto=findViewById<ImageView>(R.id.img_Foto)
-            //img_foto.setImageURI(foto)
+            val imgsize=foto/1024
             Log.d("imagen2","${foto}")
             try {
+                if (imgsize <= 150) {
 
-                val bit=MediaStore.Images.Media.getBitmap(contentResolver,foto)
-                img_foto.setImageBitmap(bit)
-                bit.compress(Bitmap.CompressFormat.JPEG, 50, stream)
-                val byteArray = stream.toByteArray()
-                val image64 = Base64.encodeToString(byteArray, Base64.DEFAULT)
-                val byteArrayDecoded = Base64.decode(image64, Base64.DEFAULT)
-                Log.d("imagenr"," ${image64}")
+                    val bit = MediaStore.Images.Media.getBitmap(contentResolver, foto)
+                    img_foto.setImageBitmap(bit)
+                    bit.compress(Bitmap.CompressFormat.JPEG, 50, stream)
+                    val byteArray = stream.toByteArray()
+                    image64 = Base64.encodeToString(byteArray, Base64.DEFAULT)
+
+                    val byteArrayDecoded = Base64.decode(image64, Base64.DEFAULT)
+                    Log.d("imagenr", " ${image64}")
+                }else{
+                    Toast.makeText(this, "La imagen pesa mas de 150kb", Toast.LENGTH_SHORT).show()
+                }
 
                 /*val bit2=BitmapFactory.decodeFile(foto.toString());
                 bit2.compress(Bitmap.CompressFormat.JPEG,100,stream)
