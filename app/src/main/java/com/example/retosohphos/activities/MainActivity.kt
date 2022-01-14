@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initUI()
-        ValidarCredenciales()
+
 
         executor =
             ContextCompat.getMainExecutor(this)
@@ -55,10 +55,8 @@ class MainActivity : AppCompatActivity() {
                 override fun onAuthenticationSucceeded(
                     result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
+                    ValidarCredenciales()
 
-                    Toast.makeText(applicationContext,
-                        "Autenticacion Exitosa", Toast.LENGTH_SHORT)
-                        .show()
                 }
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
@@ -87,6 +85,10 @@ class MainActivity : AppCompatActivity() {
     private fun ValidarCredenciales() {
         if (prefs.getEmail().isNotEmpty() && prefs.getKey().isNotEmpty()){
             login(prefs.getEmail(), prefs.getKey())
+        }else{
+            Toast.makeText(applicationContext,
+                "Autenticacion Exitosa", Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
