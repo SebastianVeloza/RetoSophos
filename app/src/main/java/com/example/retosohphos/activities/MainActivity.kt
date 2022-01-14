@@ -13,6 +13,7 @@ import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import com.example.retosohphos.Api.RetrofitApi
 import com.example.retosohphos.R
+import com.example.retosohphos.utils.Users.Companion.prefs
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,51 +30,32 @@ class MainActivity : AppCompatActivity() {
     var email: String? =null
 
     private lateinit var executor: Executor
-    private lateinit var biometricPrompt: BiometricPrompt
-    private lateinit var promptInfo: BiometricPrompt.PromptInfo
+    private lateinit var biometricPrompt: androidx.biometric.BiometricPrompt
+    private lateinit var promptInfo: androidx.biometric.BiometricPrompt.PromptInfo
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        initUI()
+        ValidarCredenciales()
 
-
-
-        val btn_Ingresar=findViewById<Button>(R.id.btn_Ingresar)
-        btn_Ingresar.setOnClickListener{
-            val et_email=findViewById<EditText>(R.id.txt_Email)
-            val et_clave=findViewById<EditText>(R.id.txt_Password)
-            email=et_email.text.toString()
-            val clave=et_clave.text.toString()
-            Log.d("Datos ingresados","Correo ${email} y Contraseña ${clave} .")
-        login(email!!, clave)}
-
-            /*val btn_huella=findViewById<Button>(R.id.btn_huella)
-            btn_huella.setOnClickListener{
-                huella()
-        }*/
-
-
-
-    }
-
-   /* private fun huella(){
         executor =
             ContextCompat.getMainExecutor(this)
-        biometricPrompt = BiometricPrompt(this, executor,
-            object : BiometricPrompt.AuthenticationCallback() {
+        biometricPrompt =androidx.biometric.BiometricPrompt(this@MainActivity, executor,
+            object : androidx.biometric.BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationError(errorCode: Int,
                                                    errString: CharSequence) {
                     super.onAuthenticationError(errorCode, errString)
 
                     Toast.makeText(applicationContext,
-                        "Authentication error: $errString", Toast.LENGTH_SHORT)
+                        "Error de autenticacion: $errString", Toast.LENGTH_SHORT)
                         .show()
                 }
                 override fun onAuthenticationSucceeded(
                     result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
-                    pasar()
+
                     Toast.makeText(applicationContext,
                         "Autenticacion Exitosa", Toast.LENGTH_SHORT)
                         .show()
@@ -85,24 +67,65 @@ class MainActivity : AppCompatActivity() {
                         .show()
                 }
             })
-        promptInfo = BiometricPrompt.PromptInfo.Builder()
+        promptInfo =BiometricPrompt.PromptInfo.Builder()
             .setTitle("Ingresa con huella")
-            .setSubtitle("")
+            .setSubtitle("Puedes ingresar con huella o con reconocimiento facial")
+            .setNegativeButtonText("Cancelar")
             .build()
         biometricPrompt.authenticate(promptInfo)
-    }*/
+
+
+            val btn_huella=findViewById<Button>(R.id.btn_huella)
+            btn_huella.setOnClickListener{
+                biometricPrompt.authenticate(promptInfo)
+        }
+
+
+
+    }
+
+    private fun ValidarCredenciales() {
+        if (prefs.getEmail().isNotEmpty() && prefs.getKey().isNotEmpty()){
+            login(prefs.getEmail(), prefs.getKey())
+        }
+    }
+
+    fun initUI(){
+        val btn_Ingresar=findViewById<Button>(R.id.btn_Ingresar)
+        btn_Ingresar.setOnClickListener{
+            AccesoDetalle()
+    }
+    }
+    private fun AccesoDetalle() {
+        val et_email=findViewById<EditText>(R.id.txt_Email)
+        val et_clave=findViewById<EditText>(R.id.txt_Password)
+
+        if (et_email.text.toString().isNotEmpty() && et_clave.text.toString().isNotEmpty()){
+            email=et_email.text.toString()
+            val clave=et_clave.text.toString()
+            prefs.saveEmail(email!!)
+            prefs.saveKey(clave)
+            login(email!!, clave)
+        }else{
+            Toast.makeText(this, "Alguno de los campos, esta vacio.", Toast.LENGTH_SHORT).show()
+        }
+
+        }
+
+
+
 
     private fun pasar(){
-        val btn_Ingresar=findViewById<Button>(R.id.btn_Ingresar)
+        /*val btn_Ingresar=findViewById<Button>(R.id.btn_Ingresar)
         btn_Ingresar.setOnClickListener{
 
             val Menu=Intent(this,menu::class.java)
             Menu.putExtra("Nombre",nombre)
             Menu.putExtra("Apellido",apellido)
-            Menu.putExtra("Correo",email)
+            Menu.putExtra("Correo",email)*/
 
-            startActivity(Menu)
-        }
+            startActivity(Intent(this,menu::class.java))
+
     }
     fun login(id:String,clave:String){
 
@@ -112,6 +135,8 @@ class MainActivity : AppCompatActivity() {
                 val call=RetrofitApi.api.getUsuario(id, clave)
                 nombre= call.nombre
                 apellido=call.apellido
+                prefs.saveName(nombre!!)
+                prefs.saveApellido(apellido!!)
                 Log.d("usuario","${nombre}.")
                 runOnUiThread{
                         pasar()
@@ -133,3 +158,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
+
+
+
+

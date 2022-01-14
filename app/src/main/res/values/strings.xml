@@ -6,7 +6,7 @@
     <string name="btn_huella">Ingresar con huella</string>
 
     <string name="txt_Nombre">Nombre</string>
-    <string name="btn_Salir">Salir</string>
+    <string name="btn_Salir">Cerrar sesion</string>
     <string name="txt_enviar">Enviar Documentos</string>
     <string name="btn_enviar">Ingresar</string>
     <string name="txt_ver">Ver Documentos</string>
@@ -14,6 +14,7 @@
     <string name="txt_oficinas">Oficinas</string>
     <string name="btn_oficinas">Ingresar</string>
 
+    <string name="bt_atras">atras</string>
 
     <string name="etxt_Numerodoc">Numero de Documento</string>
     <string name="etxt_Nombre">Nombres</string>

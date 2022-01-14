@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.retosohphos.Api.RetrofitApi
 import com.example.retosohphos.R
+import com.example.retosohphos.utils.Users.Companion.prefs
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,9 +24,9 @@ class VerDocumentos : AppCompatActivity() {
     val mAdapter : RecyclerAdapter = RecyclerAdapter()
     var documentosF :MutableList<DatosDocumentos>  = ArrayList()
 
-    var correo:String?=""
-    var Nombre:String?=""
-    var Apellido:String?=""
+    var correo:String?=prefs.getEmail()
+    var Nombre:String?= prefs.getName()
+    var Apellido:String?= prefs.getApellido()
     var imagen:String=""
 
 
@@ -34,26 +35,11 @@ class VerDocumentos : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ver_documentos)
 
-        val objetoIntent:Intent=intent
-        correo=objetoIntent.getStringExtra("Correo")
-
-        Nombre=objetoIntent.getStringExtra("Nombre")
-        Apellido=objetoIntent.getStringExtra("Apellido")
-        Log.d("correo","${correo}")
-
         datosCorreo(correo.toString())
-        Log.d("Arreglo2", " $documentosF .")
+
         //setUpRecyclerView()
         MyToolBar().show(this,"Ver Documentos",false)
     }
-    /*private fun setUpRecyclerView(){
-        val mRecyclerView = findViewById<RecyclerView>(R.id.rvDocumentos) as RecyclerView
-        mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.layoutManager = LinearLayoutManager(this)
-        mAdapter.RecyclerAdapter(getDocumentos(), this)
-        mRecyclerView.adapter = mAdapter
-    }*/
-
 
     fun datosCorreo(Correo:String) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -123,22 +109,6 @@ class VerDocumentos : AppCompatActivity() {
         }
     }
 
-    /*fun ListadeDatos(fecha:String,TipoDeAdjunto:String,nombre:String,apellido:String,imagen:Bitmap){
-        var documentos :MutableList<DatosDocumentos> = ArrayList()
-        documentos.add(DatosDocumentos(fecha,TipoDeAdjunto,nombre+apellido,imagen))
-        documentosF=documentos
-        Log.d("Arreglo1","$documentos")
-        Log.d("Arreglo2","$documentosF")
-
-
-    }
-    fun getDocumentos(): MutableList<DatosDocumentos>{
-        Log.d("Arreglo3","$documentosF")
-        return documentosF
-    }
-*/
-
-
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu,menu)
@@ -146,6 +116,13 @@ class VerDocumentos : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId==R.id.tb_atras){
+            val enviar= Intent(this,menu::class.java)
+            enviar.putExtra("Correo",correo)
+            enviar.putExtra("Nombre",Nombre)
+            enviar.putExtra("Apellido",Apellido)
+            startActivity(enviar)
+        }
         if (item.itemId==R.id.action1){
 
 
@@ -162,6 +139,7 @@ class VerDocumentos : AppCompatActivity() {
         }
         if (item.itemId==R.id.action4){
             val enviar= Intent(this,MainActivity::class.java)
+            onBackPressed()
             enviar.putExtra("Correo",correo)
             enviar.putExtra("Nombre",Nombre)
             enviar.putExtra("Apellido",Apellido)

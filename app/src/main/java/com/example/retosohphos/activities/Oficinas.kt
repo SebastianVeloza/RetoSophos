@@ -72,6 +72,7 @@ class Oficinas : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocation
                     try {
                       val call= RetrofitApi.api.getOficinas()
                         //runOnUiThread {
+
                             for (it in call.item ){
                                 runOnUiThread {
                                 val long=it.Longitud

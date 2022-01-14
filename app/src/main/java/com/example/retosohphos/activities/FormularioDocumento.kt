@@ -25,6 +25,7 @@ import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.retosohphos.Api.RetrofitApi
 import com.example.retosohphos.R
 import com.example.retosohphos.models.DocumentosPostRequest
+import com.example.retosohphos.utils.Users.Companion.prefs
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,9 +37,9 @@ class FormularioDocumento : AppCompatActivity() {
     var foto: Uri? =null
     var mediaRuta: String? =null
     var image64:String=""
-    var correo:String?=""
-    var Nombre:String?=""
-    var Apellido:String?=""
+    var correo:String?=prefs.getEmail()
+    var Nombre:String?= prefs.getName()
+    var Apellido:String?= prefs.getApellido()
     //val img_foto=findViewById<ImageView>(R.id.img_Foto)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,10 +48,6 @@ class FormularioDocumento : AppCompatActivity() {
 
         MyToolBar().show(this,"Envío de Documentación",false)
 
-        val objetoIntent:Intent=intent
-        correo=objetoIntent.getStringExtra("Correo")
-        Nombre=objetoIntent.getStringExtra("Nombre")
-        Apellido=objetoIntent.getStringExtra("Apellido")
         val txt_Nombre=findViewById<TextView>(R.id.etxt_Nombre)
         txt_Nombre.text=Nombre
         val txt_Apellido=findViewById<TextView>(R.id.etxt_Apellido)
@@ -271,6 +268,13 @@ class FormularioDocumento : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId==R.id.tb_atras){
+            val enviar= Intent(this,menu::class.java)
+            enviar.putExtra("Correo",correo)
+            enviar.putExtra("Nombre",Nombre)
+            enviar.putExtra("Apellido",Apellido)
+            startActivity(enviar)
+        }
 
         if (item.itemId==R.id.action2){
             val enviar= Intent(this,VerDocumentos::class.java)
@@ -284,6 +288,8 @@ class FormularioDocumento : AppCompatActivity() {
         }
         if (item.itemId==R.id.action4){
             val enviar= Intent(this,MainActivity::class.java)
+            prefs.cerrarSesion()
+            onBackPressed()
             enviar.putExtra("Correo",correo)
             enviar.putExtra("Nombre",Nombre)
             enviar.putExtra("Apellido",Apellido)
