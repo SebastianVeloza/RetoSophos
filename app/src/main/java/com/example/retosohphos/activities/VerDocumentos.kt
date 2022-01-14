@@ -144,6 +144,7 @@ class VerDocumentos : AppCompatActivity() {
         if (item.itemId==R.id.action4){
             val enviar= Intent(this,MainActivity::class.java)
             onBackPressed()
+            enviar.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             enviar.putExtra("Correo",correo)
             enviar.putExtra("Nombre",Nombre)
             enviar.putExtra("Apellido",Apellido)

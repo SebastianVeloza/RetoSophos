@@ -44,9 +44,12 @@ class menu : AppCompatActivity() {
 
         val btn_Salir=findViewById<Button>(R.id.btn_salir)
         btn_Salir.setOnClickListener{
-            //prefs.cerrarSesion()
+            val i = Intent(this, MainActivity::class.java)
             onBackPressed()
-            startActivity(Intent(this,MainActivity::class.java))
+            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(i)
+
+
     }
         val btn_enviar=findViewById<Button>(R.id.btn_enviar)
         btn_enviar.setOnClickListener{
@@ -106,9 +109,10 @@ class menu : AppCompatActivity() {
             startActivity(Intent(this,Oficinas::class.java))
         }
         if (item.itemId==R.id.action4){
-            //prefs.cerrarSesion()
+            val i = Intent(this, MainActivity::class.java)
             onBackPressed()
-            startActivity(Intent(this,MainActivity::class.java))
+            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(i)
         }
         return super.onOptionsItemSelected(item)
     }
