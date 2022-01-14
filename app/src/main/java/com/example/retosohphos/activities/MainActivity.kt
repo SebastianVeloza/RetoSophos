@@ -57,9 +57,7 @@ class MainActivity : AppCompatActivity() {
                     super.onAuthenticationSucceeded(result)
                     ValidarCredenciales()
                     super.onAuthenticationFailed()
-                    Toast.makeText(applicationContext, "autenticación exitosa.",
-                        Toast.LENGTH_SHORT)
-                        .show()
+                   
 
                 }
                 override fun onAuthenticationFailed() {
