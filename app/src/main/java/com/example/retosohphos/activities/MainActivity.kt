@@ -118,15 +118,13 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun pasar(){
-        /*val btn_Ingresar=findViewById<Button>(R.id.btn_Ingresar)
-        btn_Ingresar.setOnClickListener{
+
 
             val Menu=Intent(this,menu::class.java)
             Menu.putExtra("Nombre",nombre)
             Menu.putExtra("Apellido",apellido)
-            Menu.putExtra("Correo",email)*/
 
-            startActivity(Intent(this,menu::class.java))
+            startActivity(Menu)
 
     }
     fun login(id:String,clave:String){
@@ -137,8 +135,8 @@ class MainActivity : AppCompatActivity() {
                 val call=RetrofitApi.api.getUsuario(id, clave)
                 nombre= call.nombre
                 apellido=call.apellido
-                prefs.saveName(nombre!!)
-                prefs.saveApellido(apellido!!)
+                //prefs.saveName(nombre!!)
+                //prefs.saveApellido(apellido!!)
                 Log.d("usuario","${nombre}.")
                 runOnUiThread{
                         pasar()

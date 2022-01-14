@@ -19,8 +19,8 @@ import com.example.retosohphos.utils.Users.Companion.prefs
 
 class menu : AppCompatActivity() {
     var correo:String?= prefs.getEmail()
-    var Nombre:String?= prefs.getName()
-    var Apellido:String?= prefs.getApellido()
+    var Nombre:String?= ""
+    var Apellido:String?= ""
     var Ciudad:String?=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +28,9 @@ class menu : AppCompatActivity() {
 
         MyToolBar().show(this,"Menú",false)
 
+        val objetoIntent:Intent=intent
+        Nombre=objetoIntent.getStringExtra("Nombre")
+        Apellido=objetoIntent.getStringExtra("Apellido")
 
 
        /* val objetoIntent:Intent=intent
@@ -36,12 +39,12 @@ class menu : AppCompatActivity() {
         Ciudad=objetoIntent.getStringExtra("Ciudad")
          correo=objetoIntent.getStringExtra("Correo")*/
         val txt_Nombre=findViewById<TextView>(R.id.txt_Nombre)
-        txt_Nombre.text="Hola "+ Nombre
+        txt_Nombre.text="Hola "+ Nombre+" "+Apellido
 
 
         val btn_Salir=findViewById<Button>(R.id.btn_salir)
         btn_Salir.setOnClickListener{
-            prefs.cerrarSesion()
+            //prefs.cerrarSesion()
             onBackPressed()
             startActivity(Intent(this,MainActivity::class.java))
     }
@@ -103,7 +106,7 @@ class menu : AppCompatActivity() {
             startActivity(Intent(this,Oficinas::class.java))
         }
         if (item.itemId==R.id.action4){
-            prefs.cerrarSesion()
+            //prefs.cerrarSesion()
             onBackPressed()
             startActivity(Intent(this,MainActivity::class.java))
         }

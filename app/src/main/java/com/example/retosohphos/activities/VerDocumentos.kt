@@ -24,9 +24,9 @@ class VerDocumentos : AppCompatActivity() {
     val mAdapter : RecyclerAdapter = RecyclerAdapter()
     var documentosF :MutableList<DatosDocumentos>  = ArrayList()
 
-    var correo:String?=prefs.getEmail()
-    var Nombre:String?= prefs.getName()
-    var Apellido:String?= prefs.getApellido()
+    var correo:String?= prefs.getEmail()
+    var Nombre:String?= ""
+    var Apellido:String?=""
     var imagen:String=""
 
 
@@ -34,6 +34,10 @@ class VerDocumentos : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ver_documentos)
+
+        val objetoIntent:Intent=intent
+        Nombre=objetoIntent.getStringExtra("Nombre")
+        Apellido=objetoIntent.getStringExtra("Apellido")
 
         datosCorreo(correo.toString())
 

@@ -25,7 +25,7 @@ class Prefs(val context: Context) {
     }
 
     //Datos
-    val SHARED_NAME="name"
+    /*val SHARED_NAME="name"
     val SHARED_APELLIDO="apellido"
     val SHARED_CIUDAD="ciudad"
     fun saveName(nombre:String){
@@ -47,6 +47,6 @@ class Prefs(val context: Context) {
 
     fun cerrarSesion(){
         storage.edit().clear().apply()
-    }
+    }*/
 
 }

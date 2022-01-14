@@ -37,9 +37,9 @@ class FormularioDocumento : AppCompatActivity() {
     var foto: Uri? =null
     var mediaRuta: String? =null
     var image64:String=""
-    var correo:String?=prefs.getEmail()
-    var Nombre:String?= prefs.getName()
-    var Apellido:String?= prefs.getApellido()
+    var correo:String?= prefs.getEmail()
+    var Nombre:String?= ""
+    var Apellido:String?=""
     //val img_foto=findViewById<ImageView>(R.id.img_Foto)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +47,10 @@ class FormularioDocumento : AppCompatActivity() {
         setContentView(R.layout.activity_formulario_documento)
 
         MyToolBar().show(this,"Envío de Documentación",false)
+
+        val objetoIntent:Intent=intent
+        Nombre=objetoIntent.getStringExtra("Nombre")
+        Apellido=objetoIntent.getStringExtra("Apellido")
 
         val txt_Nombre=findViewById<TextView>(R.id.etxt_Nombre)
         txt_Nombre.text=Nombre
@@ -288,7 +292,7 @@ class FormularioDocumento : AppCompatActivity() {
         }
         if (item.itemId==R.id.action4){
             val enviar= Intent(this,MainActivity::class.java)
-            prefs.cerrarSesion()
+           // prefs.cerrarSesion()
             onBackPressed()
             enviar.putExtra("Correo",correo)
             enviar.putExtra("Nombre",Nombre)
