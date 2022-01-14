@@ -3,7 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="150dp"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:background="@drawable/borde"
+    android:layout_marginBottom="5dp">
     <ImageView
         android:id="@+id/img_documento"
         android:layout_width="150dp"
@@ -16,28 +18,34 @@
         >
 
     <TextView
-        android:id="@+id/txt_fecha"
+        android:id="@+id/tv_fecha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:textSize="20dp"
+        android:textColor="#000000"
 
         android:text="Fecha"
     />
 
     <TextView
-        android:id="@+id/txt_tipodeAdjunto"
+        android:id="@+id/tv_tipodeAdjunto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:textSize="20dp"
+        android:textColor="@color/red"
 
         android:text="TipoDe Ajunto "
         />
 
         <TextView
-            android:id="@+id/txt_NombreyApellido"
+            android:id="@+id/tv_NombreyApellido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:textSize="20dp"
+            android:textColor="#000000"
 
             android:text="HOLAAAA"
             />

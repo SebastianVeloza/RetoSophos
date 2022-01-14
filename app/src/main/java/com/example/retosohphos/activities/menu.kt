@@ -15,6 +15,10 @@ import com.example.retosohphos.R
 
 
 class menu : AppCompatActivity() {
+    var correo:String?=""
+    var Nombre:String?=""
+    var Apellido:String?=""
+    var Ciudad:String?=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
@@ -24,9 +28,10 @@ class menu : AppCompatActivity() {
 
 
         val objetoIntent:Intent=intent
-        var Nombre=objetoIntent.getStringExtra("Nombre")
-        var Apellido=objetoIntent.getStringExtra("Apellido")
-        var Ciudad=objetoIntent.getStringExtra("Ciudad")
+        Nombre=objetoIntent.getStringExtra("Nombre")
+         Apellido=objetoIntent.getStringExtra("Apellido")
+        Ciudad=objetoIntent.getStringExtra("Ciudad")
+         correo=objetoIntent.getStringExtra("Correo")
         val txt_Nombre=findViewById<TextView>(R.id.txt_Nombre)
         txt_Nombre.text="Hola "+Nombre
 
@@ -38,10 +43,10 @@ class menu : AppCompatActivity() {
     }
         val btn_enviar=findViewById<Button>(R.id.btn_enviar)
         btn_enviar.setOnClickListener{
-            var email=objetoIntent.getStringExtra("Correo")
+
 
             val enviar= Intent(this,FormularioDocumento::class.java)
-            enviar.putExtra("Correo",email)
+            enviar.putExtra("Correo",correo)
             enviar.putExtra("Nombre",Nombre)
             enviar.putExtra("Apellido",Apellido)
             enviar.putExtra("Ciudad",Ciudad)
@@ -50,7 +55,12 @@ class menu : AppCompatActivity() {
 
         val btn_ver=findViewById<Button>(R.id.btn_ver)
         btn_ver.setOnClickListener{
+            var email=objetoIntent.getStringExtra("Correo")
             val ver= Intent(this,VerDocumentos::class.java)
+            ver.putExtra("Correo",correo)
+            ver.putExtra("Nombre",Nombre)
+            ver.putExtra("Apellido",Apellido)
+            ver.putExtra("Ciudad",Ciudad)
             startActivity(ver)
         }
 
@@ -71,15 +81,28 @@ class menu : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId==R.id.action1){
-            startActivity(Intent(this,FormularioDocumento::class.java))
+            val enviar= Intent(this,FormularioDocumento::class.java)
+            enviar.putExtra("Correo",correo)
+            enviar.putExtra("Nombre",Nombre)
+            enviar.putExtra("Apellido",Apellido)
+            startActivity(enviar)
         }
         if (item.itemId==R.id.action2){
-            startActivity(Intent(this,VerDocumentos::class.java))
+            val enviar= Intent(this,FormularioDocumento::class.java)
+            enviar.putExtra("Correo",correo)
+            enviar.putExtra("Nombre",Nombre)
+            enviar.putExtra("Apellido",Apellido)
+            startActivity(enviar)
         }
         if (item.itemId==R.id.action3){
             startActivity(Intent(this,Oficinas::class.java))
         }
         if (item.itemId==R.id.action4){
+            val enviar= Intent(this,FormularioDocumento::class.java)
+            enviar.putExtra("Correo",correo)
+            enviar.putExtra("Nombre",Nombre)
+            enviar.putExtra("Apellido",Apellido)
+            startActivity(enviar)
             startActivity(Intent(this,MainActivity::class.java))
         }
         return super.onOptionsItemSelected(item)

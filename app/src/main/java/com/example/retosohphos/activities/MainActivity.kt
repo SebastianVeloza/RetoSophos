@@ -108,21 +108,20 @@ class MainActivity : AppCompatActivity() {
 
 
         CoroutineScope(Dispatchers.IO).launch {
-            val call=RetrofitApi.api.getUsuario(id, clave)
-            nombre= call.body()?.nombre
-            apellido=call.body()?.apellido
-            Log.d("usuario","${nombre}.")
-            runOnUiThread{
-                if (call.isSuccessful){
-                    pasar()
-
-
-
-
-                }else{
-                    showError()
+            try {
+                val call=RetrofitApi.api.getUsuario(id, clave)
+                nombre= call.nombre
+                apellido=call.apellido
+                Log.d("usuario","${nombre}.")
+                runOnUiThread{
+                        pasar()
                 }
+
+
+        }catch (Error: Exception){
+                Log.d("Error", "Error $Error .")
             }
+
 
 
         }

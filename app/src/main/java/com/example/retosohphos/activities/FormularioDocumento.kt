@@ -36,19 +36,21 @@ class FormularioDocumento : AppCompatActivity() {
     var foto: Uri? =null
     var mediaRuta: String? =null
     var image64:String=""
+    var correo:String?=""
     var Nombre:String?=""
+    var Apellido:String?=""
     //val img_foto=findViewById<ImageView>(R.id.img_Foto)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_formulario_documento)
 
-        MyToolBar().show(this,"Envío de Documentación",true)
+        MyToolBar().show(this,"Envío de Documentación",false)
 
         val objetoIntent:Intent=intent
-        var correo=objetoIntent.getStringExtra("Correo")
+        correo=objetoIntent.getStringExtra("Correo")
         Nombre=objetoIntent.getStringExtra("Nombre")
-        var Apellido=objetoIntent.getStringExtra("Apellido")
+        Apellido=objetoIntent.getStringExtra("Apellido")
         val txt_Nombre=findViewById<TextView>(R.id.etxt_Nombre)
         txt_Nombre.text=Nombre
         val txt_Apellido=findViewById<TextView>(R.id.etxt_Apellido)
@@ -148,12 +150,14 @@ class FormularioDocumento : AppCompatActivity() {
             camara_click()
 
         }
-        /*val btn_atras=findViewById<ImageView>(R.id.btn_atras)
+        val btn_atras=findViewById<ImageView>(R.id.btn_atras)
         btn_atras.setOnClickListener{
              val atras= Intent(this,menu::class.java)
+            atras.putExtra("Correo",correo)
             atras.putExtra("Nombre",Nombre)
+            atras.putExtra("Apellido",Apellido)
             startActivity(atras)
-        }*/
+        }
         val btn_enfo=findViewById<Button>(R.id.btn_enviarDoc)
         btn_enfo.setOnClickListener{
             val tipoid=respuestaRbtnDocumento
@@ -178,51 +182,68 @@ class FormularioDocumento : AppCompatActivity() {
     }
     fun postDocumentos(tipoid: String,identificacion:String,nombre:String,apellido:String,correo:String,ciudad:String,tipoDeAdjunto:String) {
         val adjunto = image64
-        if (tipoid == null && identificacion == null && identificacion=="" && nombre == null && nombre=="" && apellido == null && apellido=="" && correo == null && ciudad == null && tipoDeAdjunto == null && adjunto == null) {
+        if (tipoid!="" && identificacion!="" && nombre!="" && apellido!="" && correo!="" && ciudad!="" &&
+            tipoDeAdjunto!="" && adjunto!="" ) {
+
+            Log.d("adjunto", "adjunto ${adjunto} .")
+
+            val request = DocumentosPostRequest(
+                adjunto,
+                apellido,
+                ciudad,
+                correo,
+                identificacion,
+                nombre,
+                tipoDeAdjunto,
+                tipoid
+            )
+            Log.d("put", "put ${request} .")
+            CoroutineScope(Dispatchers.IO).launch {
+
+                try {
+                    val call = RetrofitApi.api.postDocumentos(request)
+                    //runOnUiThread {
+
+                    runOnUiThread {
+                        if (call.put == true) {
+                            Toast.makeText(
+                                this@FormularioDocumento,
+                                "El formulario se envío satisfactoriamente",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            val atras1 = Intent(this@FormularioDocumento, menu::class.java)
+
+                            atras1.putExtra("Correo", correo)
+                            atras1.putExtra("Nombre", Nombre)
+                            atras1.putExtra("Apellido", Apellido)
+                            startActivity(atras1)
+
+
+                        } else {
+                            Toast.makeText(
+                                this@FormularioDocumento,
+                                "Error no se pudo enviar el formulario",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+
+
+                } catch (Error: Exception) {
+                    Log.d("Error", "Error $Error .")
+                }
+
+
+            }
+        }else {
             Toast.makeText(
                 this,
                 "Algun campo se encuentra vacio,por favor vuelve a intentarlo",
                 Toast.LENGTH_SHORT
             ).show()
-        }
-        Log.d("adjunto", "adjunto ${adjunto} .")
 
-        val request = DocumentosPostRequest(
-            adjunto,
-            apellido,
-            ciudad,
-            correo,
-            identificacion,
-            nombre,
-            tipoDeAdjunto,
-            tipoid
-        )
-        Log.d("put", "put ${request} .")
-        CoroutineScope(Dispatchers.IO).launch {
-
-            try {
-                val call = RetrofitApi.api.postDocumentos(request)
-                //runOnUiThread {
-
-                runOnUiThread {
-                    if (call.put == true) {
-                        Toast.makeText(this@FormularioDocumento, "El formulario se envío satisfactoriamente", Toast.LENGTH_SHORT).show()
-                        val atras1= Intent(this@FormularioDocumento,menu::class.java)
-                        atras1.putExtra("Nombre",Nombre)
-                        startActivity(atras1)
-
-
-                    }else{
-                        Toast.makeText(this@FormularioDocumento, "Error no se pudo enviar el formulario", Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-
-            } catch (Error: Exception) {
-                Log.d("Error", "Error $Error .")
             }
 
-        }
     }
 
     /*private fun datos(tipoid: String,identificacion:String,nombre:String,apellido:String,correo:String,ciudad:String,tipoDeAdjunto:String){
@@ -243,7 +264,7 @@ class FormularioDocumento : AppCompatActivity() {
 
 
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu,menu)
 
         return super.onCreateOptionsMenu(menu)
@@ -252,13 +273,22 @@ class FormularioDocumento : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         if (item.itemId==R.id.action2){
-            startActivity(Intent(this,VerDocumentos::class.java))
+            val enviar= Intent(this,VerDocumentos::class.java)
+            enviar.putExtra("Correo",correo)
+            enviar.putExtra("Nombre",Nombre)
+            enviar.putExtra("Apellido",Apellido)
+            startActivity(enviar)
         }
         if (item.itemId==R.id.action3){
             startActivity(Intent(this,Oficinas::class.java))
         }
         if (item.itemId==R.id.action4){
-            startActivity(Intent(this,MainActivity::class.java))
+            val enviar= Intent(this,MainActivity::class.java)
+            enviar.putExtra("Correo",correo)
+            enviar.putExtra("Nombre",Nombre)
+            enviar.putExtra("Apellido",Apellido)
+            startActivity(enviar)
+
         }
         return super.onOptionsItemSelected(item)
     }
@@ -329,21 +359,25 @@ class FormularioDocumento : AppCompatActivity() {
                 val img_foto=findViewById<ImageView>(R.id.img_Foto)
 
                 var  imgUri=data.data
-                val imgsize=imgUri.toString().toDouble()/1024
+
 
                     try {
-                        if (imgsize<= 150) {
+
 
                             val bit = getBitmap(contentResolver, imgUri)
+
                             //val bit3=Environment.getExternalStorageState(imgUri)
                             img_foto.setImageBitmap(bit)
                             bit.compress(Bitmap.CompressFormat.JPEG, 50, stream)
                             val byteArray = stream?.toByteArray()
+                            val imgsize=byteArray.size/1024
+                            Log.d("tamañoImagen","$imgsize")
+                        if (imgsize <= 150) {
                             image64 = Base64.encodeToString(byteArray, Base64.DEFAULT)
 
                             val byteArrayDecoded = Base64.decode(image64, Base64.DEFAULT)
                             Log.d("imagenr", " ${image64}")
-                        }
+                       }
                         else
                         {
                             Toast.makeText(this, "La imagen pesa mas de 150kb", Toast.LENGTH_SHORT).show()
@@ -417,15 +451,16 @@ private fun transformImage(bitmap: Bitmap) {
         if(resultCode==Activity.RESULT_OK && requestCode==REQUEST_CAMERA){
             val stream = ByteArrayOutputStream()
             val img_foto=findViewById<ImageView>(R.id.img_Foto)
-            var imgsize=foto.toString().toDouble()/1024
+
             Log.d("imagen2","${foto}")
             try {
-                if (imgsize <= 150) {
-
                     val bit = MediaStore.Images.Media.getBitmap(contentResolver, foto)
                     img_foto.setImageBitmap(bit)
                     bit.compress(Bitmap.CompressFormat.JPEG, 50, stream)
                     val byteArray = stream.toByteArray()
+                var imgsize=byteArray.size/1024
+                Log.d("tamañoImagen","$imgsize")
+                if (imgsize <= 150) {
                     image64 = Base64.encodeToString(byteArray, Base64.DEFAULT)
 
                     val byteArrayDecoded = Base64.decode(image64, Base64.DEFAULT)

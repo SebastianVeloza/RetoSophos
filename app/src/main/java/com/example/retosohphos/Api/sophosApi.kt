@@ -13,7 +13,7 @@ interface sophosApi {
     suspend fun getUsuario(
         @Query("idUsuario")id:String,
         @Query("clave")clave:String
-    ):Response<UserResponse>
+    ):UserResponse
 
     @GET("RS_Oficinas")
     suspend fun getOficinas():ListaOficina
@@ -26,10 +26,10 @@ interface sophosApi {
     @GET("RS_Documentos")
     suspend fun getDocumentosCorreo(
         @Query("correo")correo: String
-    ):DocumentosGetResponseLista
+    ):DocumentosGetResponseListaCorreo
 
     @GET("RS_Documentos")
     suspend fun getDocumentosIdRegistro(
         @Query("idRegistro")idRegistro: String
-    ):DocumentosGetResponseLista
+    ):DocumentosGetResponseListaIdRegistro
 }
