@@ -107,7 +107,7 @@ class Oficinas : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMyLocation
 
     private fun crearMarcador(Lat:Double,long:Double) {
         val coordenadas=LatLng(Lat,long)
-        val marker=MarkerOptions().position(coordenadas).title("Oficina de Shopos solution")
+        val marker=MarkerOptions().position(coordenadas).title("Oficina de Shopos Solution")
         map.addMarker(marker)
         map.animateCamera(
             CameraUpdateFactory.newLatLngZoom(coordenadas,4f),4000,null

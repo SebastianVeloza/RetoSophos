@@ -209,7 +209,7 @@ class FormularioDocumento : AppCompatActivity() {
                         if (call.put == true) {
                             Toast.makeText(
                                 this@FormularioDocumento,
-                                "El formulario se envío satisfactoriamente",
+                                "El formulario enviado satisfactoriamente",
                                 Toast.LENGTH_SHORT
                             ).show()
                             val atras1 = Intent(this@FormularioDocumento, menu::class.java)
@@ -239,7 +239,7 @@ class FormularioDocumento : AppCompatActivity() {
         }else {
             Toast.makeText(
                 this,
-                "Algun campo se encuentra vacio,por favor vuelve a intentarlo",
+                "Algún campo se encuentra vacío, por favor vuelve a intentarlo",
                 Toast.LENGTH_SHORT
             ).show()
 
@@ -390,7 +390,7 @@ class FormularioDocumento : AppCompatActivity() {
                        }
                         else
                         {
-                            Toast.makeText(this, "La imagen pesa mas de 150kb", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "La imagen pesa más de 150kb", Toast.LENGTH_SHORT).show()
 
                         }
 
@@ -476,7 +476,7 @@ private fun transformImage(bitmap: Bitmap) {
                     val byteArrayDecoded = Base64.decode(image64, Base64.DEFAULT)
                     Log.d("imagenr", " ${image64}")
                 }else{
-                    Toast.makeText(this, "La imagen pesa mas de 150kb", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "La imagen pesa más de 150kb", Toast.LENGTH_SHORT).show()
                 }
 
                 /*val bit2=BitmapFactory.decodeFile(foto.toString());

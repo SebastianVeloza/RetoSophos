@@ -49,18 +49,22 @@ class MainActivity : AppCompatActivity() {
                     super.onAuthenticationError(errorCode, errString)
 
                     Toast.makeText(applicationContext,
-                        "Error de autenticacion: $errString", Toast.LENGTH_SHORT)
+                        "Error de autenticación: $errString", Toast.LENGTH_SHORT)
                         .show()
                 }
                 override fun onAuthenticationSucceeded(
                     result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
                     ValidarCredenciales()
+                    super.onAuthenticationFailed()
+                    Toast.makeText(applicationContext, "autenticación exitosa.",
+                        Toast.LENGTH_SHORT)
+                        .show()
 
                 }
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
-                    Toast.makeText(applicationContext, "Autenticacion fallo",
+                    Toast.makeText(applicationContext, "autenticación fallo",
                         Toast.LENGTH_SHORT)
                         .show()
                 }
@@ -87,7 +91,7 @@ class MainActivity : AppCompatActivity() {
             login(prefs.getEmail(), prefs.getKey())
         }else{
             Toast.makeText(applicationContext,
-                "Autenticacion Exitosa", Toast.LENGTH_SHORT)
+                "Credenciales no validas, por favor ingresa sesion..", Toast.LENGTH_SHORT)
                 .show()
         }
     }
@@ -109,7 +113,7 @@ class MainActivity : AppCompatActivity() {
             prefs.saveKey(clave)
             login(email!!, clave)
         }else{
-            Toast.makeText(this, "Alguno de los campos, esta vacio.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Alguno de los campos está vacío.", Toast.LENGTH_SHORT).show()
         }
 
         }
